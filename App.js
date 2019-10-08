@@ -1,23 +1,15 @@
-import React from 'react';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
 import Login from './src/screens/Login';
-import Home from './src/screens/Home';
+import ForYou from './src/screens/ForYou';
 
-const AppNavigator = createStackNavigator({
-  Login: {
-    screen: Login,
+const AuthStack = createStackNavigator({
+  ForYou: {
+    screen: ForYou,
     navigationOptions: {
-      title: 'Login',
+      title: 'ForYou',
       header: null,
-    },
-  },
-  Home: {
-    screen: Home,
-    navigationOptions: {
-      title: 'Home',
-      headerLeft: null,
       cardStack: {
         gesturesEnabled: false,
       },
@@ -25,4 +17,13 @@ const AppNavigator = createStackNavigator({
   },
 });
 
-export default createAppContainer(AppNavigator);
+const App = createSwitchNavigator({
+  App: {
+    screen: Login,
+  },
+  Auth: {
+    screen: AuthStack,
+  },
+});
+
+export default createAppContainer(App);

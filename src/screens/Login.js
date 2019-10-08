@@ -33,7 +33,7 @@ class Login extends Component {
             this.setState({ isValidEmail: false });
         } else {
             this.setState({ isValidEmail: true });
-            if ((this.state.userEmail == text) && (this.state.passwordValue == this.state.userPassword)) {
+            if ((this.state.userEmail === text) && (this.state.passwordValue === this.state.userPassword)) {
                 this.setState({ isValidLogin: true });
             } else {
                 this.setState({ isValidLogin: false });
@@ -43,7 +43,7 @@ class Login extends Component {
 
     onValidatePassword = text => {
         this.setState({ passwordValue: text });
-        if ((this.state.emailValue == this.state.userEmail) && (this.state.userPassword == text)) {
+        if ((this.state.emailValue === this.state.userEmail) && (this.state.userPassword === text)) {
             this.setState({ isValidLogin: true });
         } else {
             this.setState({ isValidLogin: false });
@@ -51,9 +51,9 @@ class Login extends Component {
     };
 
     onShowPassword = () => {
-        if (this.state.passwordValue != '') {
+        if (this.state.passwordValue !== '') {
             !this.state.isShowPassword ? this.setState({ isShowPassword: true }) : this.setState({ isShowPassword: false });
-            if ((this.state.emailValue == this.state.userEmail) && (this.state.passwordValue == this.state.userPassword)) {
+            if ((this.state.emailValue = this.state.userEmail) && (this.state.passwordValue === this.state.userPassword)) {
                 this.setState({ isValidLogin: true });
             } else {
                 this.setState({ isValidLogin: false });
@@ -99,7 +99,7 @@ class Login extends Component {
                     </Item>
                     <Button full warning rounded
                         disabled={!this.state.isValidLogin}
-                        onPress={() => this.props.navigation.navigate('Home')}
+                        onPress={() => this.props.navigation.navigate('ForYou')}
                     >
                         <Text style={styles.textButton}>Log In</Text>
                     </Button>
