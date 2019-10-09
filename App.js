@@ -6,13 +6,13 @@ import { Icon } from 'native-base';
 import Login from './src/screens/Login';
 import ForYou from './src/screens/ForYou';
 import DetailWebToon from './src/screens/DetailWebToon';
+import DetailEpisode from './src/screens/DetailEpisode';
 
 const onShare = async () => {
   try {
     const result = await Share.share({
       message: 'Aplikasi Webtoon Ardi ini',
     });
-
     if (result.action === Share.sharedAction) {
       if (result.activityType) {
         Alert.alert('1');
@@ -42,6 +42,23 @@ const AuthStack = createStackNavigator({
     screen: DetailWebToon,
     navigationOptions: {
       headerTitle: 'The Secret Of Angel',
+      headerRight: <Icon light name="share" onPress={onShare} />,
+      headerStyle: {
+        backgroundColor: '#3BAD87',
+      },
+      headerRightContainerStyle: {
+        marginEnd: 15,
+      },
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerTintColor: '#fff',
+    },
+  },
+  DetailEpisode: {
+    screen: DetailEpisode,
+    navigationOptions: {
+      headerTitle: 'Ep.1 - Kembalinya ...',
       headerRight: <Icon light name="share" onPress={onShare} />,
       headerStyle: {
         backgroundColor: '#3BAD87',
