@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
-import { StyleSheet, FlatList, SafeAreaView, Image } from 'react-native';
+import { StyleSheet, FlatList, SafeAreaView, Image, TouchableOpacity } from 'react-native';
 import {
     Container,
     Text,
@@ -103,11 +103,13 @@ class ForYou extends Component {
                                             data={this.state.banners}
                                             renderItem={({ item }) => (
                                                 <View style={styles.favItem}>
-                                                    <Image
-                                                        style={{ width: 100, height: 100, borderWidth: 3, borderColor: 'grey' }}
-                                                        source={{ uri: item.url }}
-                                                    />
-                                                    <Text style={styles.favoriteTitle}>{item.title}</Text>
+                                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('DetailWebToon')}>
+                                                        <Image
+                                                            style={{ width: 100, height: 100, borderWidth: 3, borderColor: 'grey' }}
+                                                            source={{ uri: item.url }}
+                                                        />
+                                                        <Text style={styles.favoriteTitle}>{item.title}</Text>
+                                                    </TouchableOpacity>
                                                 </View>
                                             )}
                                             keyExtractor={item => item}
@@ -203,7 +205,7 @@ const styles = StyleSheet.create({
     },
     btnFavorite: {
         height: 20,
-        width: 100,
+        width: 120,
     },
 });
 
@@ -243,7 +245,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
                         <Icon style={[{ color: tintColor }]} size={25} name={'person'} />
                     </View>
                 ),
-                activeColor: '#f0edf6',
+                activeColor: 'green',
                 inactiveColor: '#226557',
                 barStyle: { backgroundColor: '#3BAD87' },
             },
