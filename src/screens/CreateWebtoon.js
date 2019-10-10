@@ -9,43 +9,34 @@ import {
   Right,
   Button,
   Icon,
+  Label,
+  Item,
+  Input,
 } from 'native-base';
 
-class MyWebtoon extends Component {
+class CreateWebtoon extends Component {
   constructor(props) {
     super(props);
     this.state = {
       inputValue: '',
       banners: [
         {
-          title: 'The Secret of Angel',
+          title: 'Ep.2 - Kembalinya Kerumah (2)',
           url:
             'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
-          sumFavorite: '3 Episode(s)',
+          sumFavorite: '23 September 2019',
         },
         {
-          title: 'Pasutri Gaje',
+          title: 'Ep.1 - Kembalinya Kerumah (1)',
           url:
             'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
-          sumFavorite: '60 Episode(s)',
+          sumFavorite: '17 September 2019',
         },
         {
-          title: 'Young Mom',
+          title: 'Prolog',
           url:
             'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
-          sumFavorite: '48 Episode(s)',
-        },
-        {
-          title: 'Young Lady',
-          url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
-          sumFavorite: '75 Episode(s)',
-        },
-        {
-          title: 'Old Mom',
-          url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
-          sumFavorite: '10 Episode(s)',
+          sumFavorite: '1 September 2019',
         },
       ],
     };
@@ -57,6 +48,11 @@ class MyWebtoon extends Component {
       <Container>
         <Content>
           <View style={styles.viewContent}>
+            <Label style={[styles.textSubTitle, { marginTop: 15}]}>Title</Label>
+            <Item style={styles.textInput}>
+              <Input />
+            </Item>
+            <Label style={styles.textSubTitle}>Episode</Label>
             <View style={styles.viewColor}>
               <FlatList
                 showsVerticalScrollIndicator={false}
@@ -89,7 +85,7 @@ class MyWebtoon extends Component {
                         {item.title}
                       </Text>
                       <Text
-                        style={{ fontSize: 13, fontColor: 'grey' }}
+                        style={{ fontSize: 11, fontColor: 'grey' }}
                         onPress={() =>
                           this.props.navigation.navigate('DetailEpisode', {
                             itemTitle: item.title,
@@ -103,13 +99,9 @@ class MyWebtoon extends Component {
                 keyExtractor={item => item}
               />
               <Right>
-                <Button
-                  rounded
-                  success
-                  onPress={() =>
-                    this.props.navigation.navigate('CreateWebtoon')
-                  }>
+                <Button success>
                   <Icon name="add" />
+                  <Text>Add Episode</Text>
                 </Button>
               </Right>
             </View>
@@ -121,12 +113,12 @@ class MyWebtoon extends Component {
 }
 
 const styles = StyleSheet.create({
-  fixedView: {
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+  textInput: {
+    borderWidth: 4,
+    height: '10%',
+    fontSize: 40,
+    width: '90%',
+    marginBottom: 10,
   },
   container: {
     backgroundColor: '#f1f2f6',
@@ -135,7 +127,6 @@ const styles = StyleSheet.create({
   viewContent: {
     marginStart: 5,
     marginEnd: 5,
-    alignItems: 'center',
     borderRadius: 15,
   },
   viewColor: {
@@ -158,8 +149,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   textSubTitle: {
+    textAlign: 'left',
     fontSize: 18,
-    marginBottom: 4,
+    marginHorizontal: 4,
+    marginStart: 5,
     fontWeight: 'bold',
   },
   favItem: {
@@ -186,4 +179,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyWebtoon;
+export default CreateWebtoon;
