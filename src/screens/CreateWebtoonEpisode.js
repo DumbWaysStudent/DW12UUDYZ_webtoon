@@ -14,29 +14,23 @@ import {
   Input,
 } from 'native-base';
 
-class CreateWebtoon extends Component {
+class CreateWebtoonEpisode extends Component {
   constructor(props) {
     super(props);
     this.state = {
       inputValue: '',
       banners: [
         {
-          title: 'Ep.2 - Kembalinya Kerumah (2)',
+          title: '1. Page1.png',
           url:
             'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
           sumFavorite: '23 September 2019',
         },
         {
-          title: 'Ep.1 - Kembalinya Kerumah (1)',
+          title: '2. Page2.png',
           url:
             'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
           sumFavorite: '17 September 2019',
-        },
-        {
-          title: 'Prolog',
-          url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
-          sumFavorite: '1 September 2019',
         },
       ],
     };
@@ -48,13 +42,11 @@ class CreateWebtoon extends Component {
       <Container>
         <Content>
           <View style={styles.viewContent}>
-            <Label style={[styles.textSubTitle, { marginTop: 15 }]}>
-              Title
-            </Label>
+            <Label style={[styles.textSubTitle, { marginTop: 15 }]}>Name</Label>
             <Item style={styles.textInput}>
               <Input />
             </Item>
-            <Label style={styles.textSubTitle}>Episode</Label>
+            <Label style={styles.textSubTitle}>Add Image</Label>
             <View style={styles.viewColor}>
               <FlatList
                 showsVerticalScrollIndicator={false}
@@ -70,8 +62,8 @@ class CreateWebtoon extends Component {
                         })
                       }
                       style={{
-                        width: 60,
-                        height: 60,
+                        width: 80,
+                        height: 80,
                         borderWidth: 3,
                         borderColor: 'grey',
                       }}
@@ -86,26 +78,17 @@ class CreateWebtoon extends Component {
                         }>
                         {item.title}
                       </Text>
-                      <Text
-                        style={{ fontSize: 11, fontColor: 'grey' }}
-                        onPress={() =>
-                          this.props.navigation.navigate('DetailEpisode', {
-                            itemTitle: item.title,
-                          })
-                        }>
-                        {item.sumFavorite}
-                      </Text>
+                      <Button danger style={{ height: 25, width: 135 }}>
+                        <Icon name="add"/>
+                        <Text>Delete</Text>
+                      </Button>
                     </View>
                   </View>
                 )}
                 keyExtractor={item => item}
               />
               <Right>
-                <Button
-                  success
-                  onPress={() =>
-                    this.props.navigation.navigate('CreateWebtoonEpisode')
-                  }>
+                <Button success>
                   <Icon name="add" />
                   <Text>Add Episode</Text>
                 </Button>
@@ -185,4 +168,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateWebtoon;
+export default CreateWebtoonEpisode;
