@@ -1,6 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
-import { createStackNavigator } from 'react-navigation-stack';
 import {
   StyleSheet,
   FlatList,
@@ -152,8 +151,8 @@ class ForYou extends Component {
                       <View style={styles.viewAddFav}>
                         <Image
                           style={{
-                            width: 50,
-                            height: 50,
+                            width: 60,
+                            height: 60,
                             borderWidth: 3,
                             borderColor: 'grey',
                           }}
@@ -188,11 +187,11 @@ class ForYou extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f1f2f6',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
   },
   viewContent: {
-    marginStart: 10,
+    marginStart: 5,
     width: '95%',
     alignItems: 'center',
     borderRadius: 15,

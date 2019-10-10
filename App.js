@@ -8,7 +8,7 @@ import ForYou from './src/screens/ForYou';
 import DetailWebToon from './src/screens/DetailWebToon';
 import DetailEpisode from './src/screens/DetailEpisode';
 import Profile from './src/screens/Profile';
-
+import EditProfile from './src/screens/EditProfile';
 
 const onShare = async () => {
   try {
@@ -85,6 +85,24 @@ const AuthStack = createStackNavigator({
       headerRight: (
         // eslint-disable-next-line react-native/no-inline-styles
         <Icon style={{ color: 'white' }} name="create" onPress={onShare} />
+      ),
+      headerStyle: {
+        backgroundColor: '#3BAD87',
+      },
+      headerRightContainerStyle: {
+        marginEnd: 15,
+      },
+      headerTintColor: '#fff',
+    },
+  },
+  EditProfile: {
+    screen: EditProfile,
+    navigationOptions: {
+      headerTitle: 'Edit Profile',
+      headerLeft: null,
+      headerRight: (
+        // eslint-disable-next-line react-native/no-inline-styles
+        <Icon style={{ color: 'white' }} name="create" />
       ),
       headerStyle: {
         backgroundColor: '#3BAD87',
