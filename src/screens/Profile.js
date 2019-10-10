@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { Text, View, Icon, List, ListItem } from 'native-base';
 
 const routes = [
-    { id: 1, title: 'My Webtoon Creation', icon: '', nextAction: 'ForYou' },
+    { id: 1, title: 'My Webtoon Creation', icon: '', nextAction: 'MyWebtoon' },
     { id: 2, title: 'Edit Profile', icon: '', nextAction: 'EditProfile' },
     { id: 3, title: 'Log Out', icon: '', nextAction: 'Login' },
 

@@ -9,6 +9,7 @@ import DetailWebToon from './src/screens/DetailWebToon';
 import DetailEpisode from './src/screens/DetailEpisode';
 import Profile from './src/screens/Profile';
 import EditProfile from './src/screens/EditProfile';
+import MyWebtoon from './src/screens/MyWebtoon';
 
 const onShare = async () => {
   try {
@@ -104,6 +105,19 @@ const AuthStack = createStackNavigator({
         // eslint-disable-next-line react-native/no-inline-styles
         <Icon style={{ color: 'white' }} name="create" />
       ),
+      headerStyle: {
+        backgroundColor: '#3BAD87',
+      },
+      headerRightContainerStyle: {
+        marginEnd: 15,
+      },
+      headerTintColor: '#fff',
+    },
+  },
+  MyWebtoon: {
+    screen: MyWebtoon,
+    navigationOptions: {
+      headerTitle: 'MyWebtoon',
       headerStyle: {
         backgroundColor: '#3BAD87',
       },
