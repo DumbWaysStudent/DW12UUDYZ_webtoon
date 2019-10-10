@@ -1,7 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
 import { StyleSheet, FlatList, Image } from 'react-native';
-import { Container, Text, View, Content } from 'native-base';
+import {
+  Container,
+  Text,
+  View,
+  Content,
+  Right,
+  Button,
+  Icon,
+} from 'native-base';
 
 class MyWebtoon extends Component {
   constructor(props) {
@@ -94,6 +102,11 @@ class MyWebtoon extends Component {
                 )}
                 keyExtractor={item => item}
               />
+              <Right>
+                <Button rounded success>
+                  <Icon name="add" />
+                </Button>
+              </Right>
             </View>
           </View>
         </Content>
@@ -103,6 +116,13 @@ class MyWebtoon extends Component {
 }
 
 const styles = StyleSheet.create({
+  fixedView: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
   container: {
     backgroundColor: '#f1f2f6',
     alignItems: 'center',
