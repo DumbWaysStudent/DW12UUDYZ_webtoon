@@ -12,6 +12,8 @@ import EditProfile from './src/screens/EditProfile';
 import MyWebtoon from './src/screens/MyWebtoon';
 import CreateWebtoon from './src/screens/CreateWebtoon';
 import CreateWebtoonEpisode from './src/screens/CreateWebtoonEpisode';
+import EditMyWebtoon from './src/screens/EditMyWebtoon';
+
 
 const onShare = async () => {
   try {
@@ -150,6 +152,23 @@ const AuthStack = createStackNavigator({
     screen: CreateWebtoonEpisode,
     navigationOptions: {
       headerTitle: 'Create Episode',
+      headerRight: (
+        // eslint-disable-next-line react-native/no-inline-styles
+        <Icon style={{ color: 'white' }} name="checkmark" />
+      ),
+      headerStyle: {
+        backgroundColor: '#3BAD87',
+      },
+      headerRightContainerStyle: {
+        marginEnd: 15,
+      },
+      headerTintColor: '#fff',
+    },
+  },
+  EditMyWebtoon: {
+    screen: EditMyWebtoon,
+    navigationOptions: {
+      headerTitle: 'Edit Webtoon',
       headerRight: (
         // eslint-disable-next-line react-native/no-inline-styles
         <Icon style={{ color: 'white' }} name="checkmark" />
