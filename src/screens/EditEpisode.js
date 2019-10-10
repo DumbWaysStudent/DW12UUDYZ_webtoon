@@ -14,7 +14,7 @@ import {
   Input,
 } from 'native-base';
 
-class CreateWebtoonEpisode extends Component {
+class EditEpisode extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +28,8 @@ class CreateWebtoonEpisode extends Component {
         },
         {
           title: 'page2.png',
-          url: 'https://pbs.twimg.com/media/D-MIGS6U4AEjALU.jpg',
+          url:
+            'https://cf.shopee.co.id/file/2843f78cb557d57de7c7ab97e4344e9b_tn',
           sumFavorite: '17 September 2019',
         },
       ],
@@ -65,19 +66,17 @@ class CreateWebtoonEpisode extends Component {
                     />
                     <View style={styles.viewListItem}>
                       <Text>{item.title}</Text>
-                      <Button danger style={{ height: 25, width: 85 }}>
-                        <Text>Delete</Text>
-                      </Button>
                     </View>
                   </View>
                 )}
                 keyExtractor={item => item}
               />
-              <Right>
-                <Button success style={styles.btnComponent}>
-                  <Text style={styles.txtBtn}>+  Image</Text>
-                </Button>
-              </Right>
+              <Button style={styles.btnComponent} success>
+                <Text>+  Image</Text>
+              </Button>
+              <Button style={styles.btnComponent} danger>
+                <Text style={styles.txtBtn}>Delete Episode</Text>
+              </Button>
             </View>
           </View>
         </Content>
@@ -147,15 +146,20 @@ const styles = StyleSheet.create({
     marginStart: 10,
     justifyContent: 'center',
   },
-  btnComponent: {
-    borderRadius: 7,
-    marginTop: 10,
-    width: 100,
-    alignItems: 'center',
+  btnFavorite: {
+    height: 20,
+    width: 120,
   },
-  txtBtn: {
-    textAlign: 'center',
-  },
+    btnComponent: {
+        borderRadius: 7,
+        marginTop: 10,
+        width: 150,
+        textAlign: 'center',
+        alignItems: 'center',
+    },
+    txtBtn: {
+        textAlign: 'center',
+    },
 });
 
-export default CreateWebtoonEpisode;
+export default EditEpisode;

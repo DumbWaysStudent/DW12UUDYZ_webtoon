@@ -17,34 +17,33 @@ class DetailEpisode extends Component {
       banners: [
         {
           url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+            'https://pm1.narvii.com/6516/33c1043bd66581e0306c86032611b7c69f9861cf_hq.jpg',
         },
         {
           url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
-          releaseDate: '3 Oktober 2019',
+            'https://i.pinimg.com/originals/4c/6f/b9/4c6fb973437cc39b13197688a95c2362.png',
         },
         {
           url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+            'https://i.pinimg.com/originals/aa/45/4c/aa454ca6f22cf4c75d965ed4f36dcc5c.png',
+        },
+        {
+          url:
+            'https://scontent-lga3-1.cdninstagram.com/vp/ec0f2974758e822f5d982809440f0d00/5DB7E267/t51.2885-15/e35/34863244_2019620481622929_9059925939713998848_n.jpg?_nc_ht=scontent-lga3-1.cdninstagram.com&ig_cache_key=MTgwOTEyNTAxNzIzNTkzNTE2Mg%3D%3D.2',
+        },
+        {
+          url: 'https://pbs.twimg.com/media/D-MIGS6U4AEjALU.jpg',
+        },
+        {
+          url:
+            'https://www.anime-planet.com/images/manga/covers/sweet-home-23975.jpg?t=1516403924',
+        },
+        {
+          url:
+            'https://66.media.tumblr.com/b3d9535aca236e23efb6349458270016/tumblr_p6gki04CX11r4xqamo3_r1_500.jpg',
         },
       ],
     };
-  }
-  componentWillMount() {
-    this.setState({
-      interval: setInterval(() => {
-        this.setState({
-          position:
-            this.state.position === this.state.banners.length
-              ? 0
-              : this.state.position + 1,
-        });
-      }, 2000),
-    });
-  }
-  componentWillUnmount() {
-    clearInterval(this.state.interval);
   }
   render() {
     console.disableYellowBox = true;

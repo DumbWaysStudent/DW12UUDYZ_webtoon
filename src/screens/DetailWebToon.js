@@ -19,25 +19,25 @@ class DetailWebToon extends Component {
         {
           title: 'Ep.4 - Last Game ',
           url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+            'https://awsimages.detik.net.id/community/media/visual/2018/02/06/9ccd0ab5-43c8-4ea0-876c-9b0763bd38d6_43.jpeg?w=780&q=90',
           releaseDate: '9 Oktober 2019',
         },
         {
           title: 'Ep.3 - Kaburnya dari Rumah',
           url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+            'https://forums.tapas.io/uploads/default/original/3X/4/d/4dcd6b2abf71721199d507d6b28c73dc1e2a55e4.png',
           releaseDate: '3 Oktober 2019',
         },
         {
-          title: 'Ep.2 - Kembalinya Kerumah (2)',
+          title: 'Ep.2 - Teringat Kerumah',
           url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+            'https://66.media.tumblr.com/d5cff69e37d4dc86ae33f3e9c6dd6970/tumblr_inline_pkorbg5I481szvfcc_540.jpg',
           releaseDate: '23 September 2019',
         },
         {
-          title: 'Ep.1 - Kembalinya Kerumah (1)',
+          title: 'Ep.1 - Kembalinya Nyata',
           url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+            'https://cf.shopee.co.id/file/2843f78cb557d57de7c7ab97e4344e9b_tn',
           releaseDate: '17 September 2019',
         },
         {
@@ -71,7 +71,7 @@ class DetailWebToon extends Component {
         <Content>
           <View>
             <View style={styles.viewColor}>
-              <Item style={styles.itemMarginBottom}>
+              <Item>
                 <Image
                   style={{
                     width: '100%',
@@ -79,7 +79,7 @@ class DetailWebToon extends Component {
                   }}
                   source={{
                     uri:
-                      'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+                      'https://cdn.idntimes.com/content-images/post/20190119/save-me-bts-01dacdfa280c37894b18ae59b09bb6c2_600x400.jpg',
                   }}
                 />
               </Item>
@@ -197,8 +197,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 5,
-    padding: 15,
+    marginVertical: 3,
+    padding: 5,
   },
   viewListItem: {
     width: '100%',

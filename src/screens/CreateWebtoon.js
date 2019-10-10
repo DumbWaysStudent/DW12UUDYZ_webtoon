@@ -21,15 +21,27 @@ class CreateWebtoon extends Component {
       inputValue: '',
       banners: [
         {
-          title: 'Ep.2 - Kembalinya Kerumah (2)',
+          title: 'Ep.4 - Last Game ',
           url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+            'https://awsimages.detik.net.id/community/media/visual/2018/02/06/9ccd0ab5-43c8-4ea0-876c-9b0763bd38d6_43.jpeg?w=780&q=90',
+          sumFavorite: '9 Oktober 2019',
+        },
+        {
+          title: 'Ep.3 - Kaburnya dari Rumah',
+          url:
+            'https://forums.tapas.io/uploads/default/original/3X/4/d/4dcd6b2abf71721199d507d6b28c73dc1e2a55e4.png',
+          sumFavorite: '3 Oktober 2019',
+        },
+        {
+          title: 'Ep.2 - Teringat Kerumah',
+          url:
+            'https://66.media.tumblr.com/d5cff69e37d4dc86ae33f3e9c6dd6970/tumblr_inline_pkorbg5I481szvfcc_540.jpg',
           sumFavorite: '23 September 2019',
         },
         {
-          title: 'Ep.1 - Kembalinya Kerumah (1)',
+          title: 'Ep.1 - Kembalinya Nyata',
           url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+            'https://cf.shopee.co.id/file/2843f78cb557d57de7c7ab97e4344e9b_tn',
           sumFavorite: '17 September 2019',
         },
         {
@@ -64,11 +76,6 @@ class CreateWebtoon extends Component {
                 renderItem={({ item }) => (
                   <View style={styles.viewAddFav}>
                     <Image
-                      onPress={() =>
-                        this.props.navigation.navigate('DetailEpisode', {
-                          itemTitle: item.title,
-                        })
-                      }
                       style={{
                         width: 60,
                         height: 60,
@@ -78,21 +85,8 @@ class CreateWebtoon extends Component {
                       source={{ uri: item.url }}
                     />
                     <View style={styles.viewListItem}>
-                      <Text
-                        onPress={() =>
-                          this.props.navigation.navigate('DetailEpisode', {
-                            itemTitle: item.title,
-                          })
-                        }>
-                        {item.title}
-                      </Text>
-                      <Text
-                        style={{ fontSize: 11, fontColor: 'grey' }}
-                        onPress={() =>
-                          this.props.navigation.navigate('DetailEpisode', {
-                            itemTitle: item.title,
-                          })
-                        }>
+                      <Text>{item.title}</Text>
+                      <Text style={{ fontSize: 11, fontColor: 'grey' }}>
                         {item.sumFavorite}
                       </Text>
                     </View>
@@ -102,12 +96,12 @@ class CreateWebtoon extends Component {
               />
               <Right>
                 <Button
+                  style={styles.btnComponent}
                   success
                   onPress={() =>
                     this.props.navigation.navigate('CreateWebtoonEpisode')
                   }>
-                  <Icon name="add" />
-                  <Text>Add Episode</Text>
+                  <Text style={styles.txtBtn}>+ Add Episode</Text>
                 </Button>
               </Right>
             </View>
@@ -179,9 +173,15 @@ const styles = StyleSheet.create({
     marginStart: 10,
     justifyContent: 'center',
   },
-  btnFavorite: {
-    height: 20,
-    width: 120,
+  btnComponent: {
+    borderRadius: 7,
+    marginTop: 10,
+    marginBottom: 30,
+    width: 150,
+    alignItems: 'center',
+  },
+  txtBtn: {
+    textAlign: 'center',
   },
 });
 

@@ -34,27 +34,27 @@ class ForYou extends Component {
         {
           title: 'The Secret ....',
           url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+            'https://swebtoon-phinf.pstatic.net/20190111_246/1547145672832qC9wR_JPEG/10_EC8DB8EB84A4EC9DBC_ipad.jpg',
         },
         {
           title: 'Pasutri Gaje',
           url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfxPFjUCBTEVAwdDegTAKb5n05StXMUBjNJKZ4C8fJNQUqGdxB',
         },
         {
-          title: 'Young Mom',
+          title: 'Young Kids',
           url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+            'https://swebtoon-phinf.pstatic.net/20190702_222/1562021366038KBkoL_JPEG/10_EC8DB8EB84A4EC9DBC_ipad.jpg',
         },
         {
-          title: 'Young Lady',
+          title: 'Young Boys',
           url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+            'https://swebtoon-phinf.pstatic.net/20181026_50/1540502090211TQ4tw_JPEG/10_EC8DB8EB84A4EC9DBC_ipad+28329.jpg',
         },
         {
-          title: 'Old Mom',
+          title: 'Old School',
           url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+            'https://mmc.tirto.id/image/otf/500x0/2019/07/02/webtoon-flawless--web_ratio-16x9.jpg',
         },
       ],
     };
@@ -161,7 +161,7 @@ class ForYou extends Component {
                         <View style={styles.viewListItem}>
                           <Text>{item.title}</Text>
                           <Button
-                            warning
+                            success
                             style={styles.btnFavorite}
                             onPress={() =>
                               this.props.navigation.navigate('DetailWebToon', {
@@ -243,10 +243,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 5,
-    padding: 15,
+    padding: 5,
+    paddingStart: 10,
   },
   viewListItem: {
-    marginStart: 10,
+    marginStart: 15,
     justifyContent: 'center',
   },
   btnFavorite: {
