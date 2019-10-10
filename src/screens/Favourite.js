@@ -1,65 +1,186 @@
-/* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
-import {
-    Container,
-    Text,
-    View,
-} from 'native-base';
+import { StyleSheet, FlatList, Image } from 'react-native';
+import { Container, Text, View, Icon, Content, Item, Input } from 'native-base';
 
 class Favourite extends Component {
-    render() {
-        return (
-            <Container style={styles.container}>
-                <View style={styles.viewContent}>
-                    <Text style={styles.textTitle}>Favourite</Text>
-                    <Text style={styles.textSubTitle}>
-                        Login with your account WEBTOON
-                    </Text>
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputValue: '',
+      banners: [
+        {
+          title: 'The Secret of Angel',
+          url:
+            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+          sumFavorite: '123 Favorite',
+        },
+        {
+          title: 'Pasutri Gaje',
+          url:
+            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+          sumFavorite: '60 Favorite',
+        },
+        {
+          title: 'Young Mom',
+          url:
+            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+          sumFavorite: '48 Favorite',
+        },
+        {
+          title: 'Young Lady',
+          url:
+            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+          sumFavorite: '75 Favorite',
+        },
+        {
+          title: 'Old Mom',
+          url:
+            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
+          sumFavorite: '180 Favorite',
+        },
+      ],
+    };
+  }
 
-                </View>
-            </Container>
-        );
-    }
+  setSearchText(event) {
+    let searchText = event.nativeEvent.text;
+    let data = this.state.dataBackup;
+    searchText = searchText.trim().toLowerCase();
+    data = data.filter(l => {
+      return l.nama.toLowerCase().match(searchText);
+    });
+    this.setState({
+      data: data,
+    });
+  }
+
+  render() {
+    console.disableYellowBox = true;
+    return (
+      <Container>
+        <Content>
+          <View style={styles.viewContent}>
+            <View style={styles.viewColor}>
+              <Item rounded style={styles.inputText} regular>
+                <Input
+                  placeholder="Pencarian"
+                  value={this.state.inputValue}
+                  onChangeText={searchText =>
+                    this.setState({ inputValue: searchText })
+                  }
+                />
+                <Icon active name="search" />
+              </Item>
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                data={this.state.banners.filter(item =>
+                  item.title.includes(this.state.inputValue),
+                )}
+                renderItem={({ item }) => (
+                  <View style={styles.viewAddFav}>
+                    <Image
+                      onPress={() =>
+                        this.props.navigation.navigate('DetailEpisode', {
+                          itemTitle: item.title,
+                        })
+                      }
+                      style={{
+                        width: 60,
+                        height: 60,
+                        borderWidth: 3,
+                        borderColor: 'grey',
+                      }}
+                      source={{ uri: item.url }}
+                    />
+                    <View style={styles.viewListItem}>
+                      <Text
+                        onPress={() =>
+                          this.props.navigation.navigate('DetailEpisode', {
+                            itemTitle: item.title,
+                          })
+                        }>
+                        {item.title}
+                      </Text>
+                      <Text
+                        style={{ fontSize: 13, fontColor: 'grey' }}
+                        onPress={() =>
+                          this.props.navigation.navigate('DetailEpisode', {
+                            itemTitle: item.title,
+                          })
+                        }>
+                        {item.sumFavorite}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+                keyExtractor={item => item}
+              />
+            </View>
+          </View>
+        </Content>
+      </Container>
+    );
+  }
 }
 
-export default Favourite;
-
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f5f6fa',
-        alignItems: 'center',
-    },
-    viewContent: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    textTitle: {
-        fontSize: 40,
-        textAlign: 'center',
-    },
-    textSubTitle: {
-        fontSize: 15,
-        marginBottom: '10%',
-        textAlign: 'center',
-    },
-    textInput: {
-        fontSize: 20,
-        borderWidth: 1,
-    },
-    textButton: {
-        color: 'black',
-    },
-    itemInput: {
-        marginBottom: '3%',
-        width: '80%',
-    },
-    itemInput2: {
-        marginBottom: '8%',
-        width: '80%',
-    },
-    textInputError: {
-        borderColor: 'red',
-    },
+  container: {
+    backgroundColor: '#f1f2f6',
+    alignItems: 'center',
+  },
+  viewContent: {
+    marginStart: 5,
+    marginEnd: 5,
+    alignItems: 'center',
+    borderRadius: 15,
+  },
+  viewColor: {
+    backgroundColor: '#ffffff',
+    alignItems: 'center',
+  },
+  inputText: {
+    width: '95%',
+    marginTop: 20,
+    marginBottom: 10,
+    borderRadius: 15,
+  },
+  itemMarginBottom: {
+    marginBottom: 10,
+  },
+  itemMarginBottomInput: {
+    marginBottom: 20,
+  },
+  favoriteTitle: {
+    textAlign: 'center',
+  },
+  textSubTitle: {
+    fontSize: 18,
+    marginBottom: 4,
+    fontWeight: 'bold',
+  },
+  favItem: {
+    marginStart: 20,
+    marginHorizontal: 10,
+    marginVertical: 10,
+    borderRadius: 15,
+  },
+  viewAddFav: {
+    width: 600,
+    backgroundColor: '#ffffff',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  viewListItem: {
+    marginStart: 10,
+    justifyContent: 'center',
+  },
+  btnFavorite: {
+    height: 20,
+    width: 120,
+  },
 });
+
+export default Favourite;

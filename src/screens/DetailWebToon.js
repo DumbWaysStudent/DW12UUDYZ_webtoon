@@ -1,14 +1,15 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  FlatList,
-  SafeAreaView,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, FlatList, SafeAreaView, Image } from 'react-native';
 import { Container, Text, View, Content, Item } from 'native-base';
 
 class DetailWebToon extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state;
+    return {
+      title: params ? params.otherTitle : 'No Title',
+    };
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -94,11 +95,15 @@ class DetailWebToon extends Component {
                       <View
                         style={styles.viewAddFav}
                         onPress={() =>
-                          this.props.navigation.navigate('DetailWebToon')
+                          this.props.navigation.navigate('DetailEpisode', {
+                            itemTitle: item.title,
+                          })
                         }>
                         <Image
                           onPress={() =>
-                            this.props.navigation.navigate('DetailEpisode')
+                            this.props.navigation.navigate('DetailEpisode', {
+                              itemTitle: item.title,
+                            })
                           }
                           style={{
                             width: 50,
@@ -111,14 +116,18 @@ class DetailWebToon extends Component {
                         <View style={styles.viewListItem}>
                           <Text
                             onPress={() =>
-                              this.props.navigation.navigate('DetailEpisode')
+                              this.props.navigation.navigate('DetailEpisode', {
+                                itemTitle: item.title,
+                              })
                             }>
                             {item.title}
                           </Text>
                           <Text
                             style={{ fontSize: 13, fontColor: 'grey' }}
                             onPress={() =>
-                              this.props.navigation.navigate('DetailEpisode')
+                              this.props.navigation.navigate('DetailEpisode', {
+                                itemTitle: item.title,
+                              })
                             }>
                             {item.releaseDate}
                           </Text>

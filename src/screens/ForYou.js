@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -117,7 +118,9 @@ class ForYou extends Component {
                         <View style={styles.favItem}>
                           <TouchableOpacity
                             onPress={() =>
-                              this.props.navigation.navigate('DetailWebToon')
+                              this.props.navigation.navigate('DetailWebToon', {
+                                otherTitle: item.title,
+                              })
                             }>
                             <Image
                               style={{
@@ -156,7 +159,14 @@ class ForYou extends Component {
                         />
                         <View style={styles.viewListItem}>
                           <Text>{item.title}</Text>
-                          <Button warning style={styles.btnFavorite}>
+                          <Button
+                            warning
+                            style={styles.btnFavorite}
+                            onPress={() =>
+                              this.props.navigation.navigate('DetailWebToon', {
+                                otherTitle: item.title,
+                              })
+                            }>
                             <Text> + Favorite </Text>
                           </Button>
                         </View>

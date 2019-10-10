@@ -41,16 +41,12 @@ const AuthStack = createStackNavigator({
   DetailWebToon: {
     screen: DetailWebToon,
     navigationOptions: {
-      headerTitle: 'The Secret Of Angel',
       headerRight: <Icon light name="share" onPress={onShare} />,
       headerStyle: {
         backgroundColor: '#3BAD87',
       },
       headerRightContainerStyle: {
         marginEnd: 15,
-      },
-      headerTitleStyle: {
-        fontWeight: 'bold',
       },
       headerTintColor: '#fff',
     },
@@ -58,16 +54,12 @@ const AuthStack = createStackNavigator({
   DetailEpisode: {
     screen: DetailEpisode,
     navigationOptions: {
-      headerTitle: 'Ep.1 - Kembalinya ...',
       headerRight: <Icon light name="share" onPress={onShare} />,
       headerStyle: {
         backgroundColor: '#3BAD87',
       },
       headerRightContainerStyle: {
         marginEnd: 15,
-      },
-      headerTitleStyle: {
-        fontWeight: 'bold',
       },
       headerTintColor: '#fff',
     },

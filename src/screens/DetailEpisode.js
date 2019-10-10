@@ -3,6 +3,12 @@ import { StyleSheet, FlatList, SafeAreaView, Image } from 'react-native';
 import { Container, Text, View, Content, Item } from 'native-base';
 
 class DetailEpisode extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state;
+    return {
+      title: params ? params.itemTitle : 'No Title',
+    };
+  };
   constructor(props) {
     super(props);
     this.state = {
