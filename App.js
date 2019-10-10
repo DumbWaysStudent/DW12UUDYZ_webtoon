@@ -7,6 +7,8 @@ import Login from './src/screens/Login';
 import ForYou from './src/screens/ForYou';
 import DetailWebToon from './src/screens/DetailWebToon';
 import DetailEpisode from './src/screens/DetailEpisode';
+import Profile from './src/screens/Profile';
+
 
 const onShare = async () => {
   try {
@@ -28,6 +30,12 @@ const onShare = async () => {
 };
 
 const AuthStack = createStackNavigator({
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      header: null,
+    },
+  },
   ForYou: {
     screen: ForYou,
     navigationOptions: {
@@ -41,7 +49,10 @@ const AuthStack = createStackNavigator({
   DetailWebToon: {
     screen: DetailWebToon,
     navigationOptions: {
-      headerRight: <Icon light name="share" onPress={onShare} />,
+      headerRight: (
+        // eslint-disable-next-line react-native/no-inline-styles
+        <Icon style={{ color: 'white' }} name="share" onPress={onShare} />
+      ),
       headerStyle: {
         backgroundColor: '#3BAD87',
       },
@@ -54,7 +65,27 @@ const AuthStack = createStackNavigator({
   DetailEpisode: {
     screen: DetailEpisode,
     navigationOptions: {
-      headerRight: <Icon light name="share" onPress={onShare} />,
+      headerRight: (
+        // eslint-disable-next-line react-native/no-inline-styles
+        <Icon style={{ color: 'white' }} name="share" onPress={onShare} />
+      ),
+      headerStyle: {
+        backgroundColor: '#3BAD87',
+      },
+      headerRightContainerStyle: {
+        marginEnd: 15,
+      },
+      headerTintColor: '#fff',
+    },
+  },
+  Profile: {
+    screen: Profile,
+    navigationOptions: {
+      headerLeft: null,
+      headerRight: (
+        // eslint-disable-next-line react-native/no-inline-styles
+        <Icon style={{ color: 'white' }} name="create" onPress={onShare} />
+      ),
       headerStyle: {
         backgroundColor: '#3BAD87',
       },

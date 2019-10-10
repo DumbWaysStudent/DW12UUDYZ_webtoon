@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
+import { createStackNavigator } from 'react-navigation-stack';
 import {
   StyleSheet,
   FlatList,
@@ -95,6 +96,7 @@ class ForYou extends Component {
                   position={this.state.position}
                   indicatorSelectedColor="#3BAD87"
                   indicatorColor="#f0edf6"
+                  titleStye={styles.textSlideShow}
                   onPositionChanged={position => this.setState({ position })}
                 />
               </Item>
@@ -225,6 +227,12 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     fontWeight: 'bold',
   },
+  textSlideShow: {
+    fontSize: 30,
+    marginBottom: 4,
+    fontWeight: 'bold',
+    color: 'white',
+  },
   favItem: {
     marginStart: 20,
     marginHorizontal: 10,
@@ -253,7 +261,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
     ForYou: {
       screen: ForYou,
       navigationOptions: {
-        tabBarLabel: 'ForYou',
+        tabBarLabel: 'For You',
         tabBarIcon: ({ tintColor }) => (
           <View>
             <Icon style={[{ color: tintColor }]} size={25} name={'apps'} />
@@ -278,13 +286,18 @@ const TabNavigator = createMaterialBottomTabNavigator(
     Profile: {
       screen: Profile,
       navigationOptions: {
+        headerLeft: null,
+        headerRight: (
+          // eslint-disable-next-line react-native/no-inline-styles
+          <Icon style={{ color: 'white' }} name="create" />
+        ),
         tabBarLabel: 'Profile',
         tabBarIcon: ({ tintColor }) => (
           <View>
             <Icon style={[{ color: tintColor }]} size={25} name={'person'} />
           </View>
         ),
-        activeColor: 'green',
+        activeColor: '#f0edf6',
         inactiveColor: '#226557',
         barStyle: { backgroundColor: '#3BAD87' },
       },

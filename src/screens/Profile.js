@@ -1,24 +1,33 @@
 /* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import {
-    Container,
-    Text,
-    View,
-} from 'native-base';
+import { Text, View, Icon, List, ListItem } from 'native-base';
+
+const routes = [
+    { id: 1, title: 'My Webtoon Creation', icon: '', nextAction: 'ForYou' },
+    { id: 2, title: 'Log Out', icon: '', nextAction: 'Login' },
+];
 
 class Profile extends Component {
+    static navigationOptions = ({ navigation }) =>
+    {
+        const { params } = navigation.state;
+        return {
+            title: params ? params.otherTitle : 'No Title',
+        };
+    };
     render() {
         return (
-            <Container style={styles.container}>
-                <View style={styles.viewContent}>
-                    <Text style={styles.textTitle}>Profile</Text>
-                    <Text style={styles.textSubTitle}>
-                        Login with your account WEBTOON
-                    </Text>
-
-                </View>
-            </Container>
+            <View style={styles.viewContent}>
+                <Icon style={styles.textTitle} name="contact" />
+                <Text style={styles.textSubTitle}>
+                    Your Name
+                </Text>
+                <List dataArray={routes} renderRow={(data) =>
+                    <ListItem onPress={() => this.props.navigation.navigate(data.nextAction)}>
+                            <Text style={styles.dataList}>{data.title}</Text>
+                    </ListItem>} />
+            </View>
         );
     }
 }
@@ -26,40 +35,25 @@ class Profile extends Component {
 export default Profile;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f5f6fa',
-        alignItems: 'center',
-    },
     viewContent: {
+        marginTop: '15%',
         flex: 1,
         justifyContent: 'center',
+        backgroundColor: '#f5f6fa',
     },
     textTitle: {
-        fontSize: 40,
+        fontSize: 150,
         textAlign: 'center',
+        color: 'grey',
     },
     textSubTitle: {
-        fontSize: 15,
+        fontSize: 20,
         marginBottom: '10%',
         textAlign: 'center',
+        fontWeight: 'bold',
     },
-    textInput: {
-        fontSize: 20,
-        borderWidth: 1,
+    dataList: {
+        textAlign: 'justify',
     },
-    textButton: {
-        color: 'black',
-    },
-    itemInput: {
-        marginBottom: '3%',
-        width: '80%',
-    },
-    itemInput2: {
-        marginBottom: '8%',
-        width: '80%',
-    },
-    textInputError: {
-        borderColor: 'red',
-    },
+
 });
