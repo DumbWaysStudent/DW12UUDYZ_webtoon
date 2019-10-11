@@ -7,8 +7,8 @@
 This project is still on very early development stage. If you want to use for production, use it with your own risk.
 <br>More feature Coming Really Soon.
 
-## Clone Webtoon
-Clone Webtoon is a Project created using react native and this Project aims to resemble Webtoon.
+## tint&Toon
+tint&Toon is a Comic Cartoon Reading and Creation Application.
 
 ## Screenshots
 
@@ -33,9 +33,8 @@ Clone Webtoon is a Project created using react native and this Project aims to r
 
 ## Features
 * MyWebtoon Creation
-* 
-* 
-* 
+* Favourite Toon
+* Read Anywhere and Anytime
 
 ## Tech Stack
 * React Native for the Mobile Frontend
@@ -63,9 +62,3 @@ $ react-native run-android #for android
 * Email: ardiwidyanto15@gmail.com
 
 ----
-
-## License
-
-BSD 3-Clause License
-
-See [LICENSE](LICENSE)
