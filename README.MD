@@ -12,21 +12,21 @@ tint&Toon is a Comic Cartoon Reading and Creation Application.
 
 ## Screenshots
 <p float="left">
-  <img src="https://i.ibb.co/thzdqDf/Login.png" alt="Login" border="0">
-  <img src="https://i.ibb.co/1Msqzjq/For-You.png" alt="For-You" border="0">
-  <img src="https://i.ibb.co/YffMYMV/For-You-2.png" alt="For-You-2" border="0">
-  <img src="https://i.ibb.co/wz4g7Yw/Detail-Webtoon.png" alt="Detail-Webtoon" border="0">
-  <img src="https://i.ibb.co/XDSPwRH/Detail-Episode.png" alt="Detail-Episode" border="0">
-  <img src="https://i.ibb.co/SQbMg0Z/Favourite.png" alt="Favourite" border="0">  
-  <img src="https://i.ibb.co/Vx8F1Yc/Profile.png" alt="Profile" border="0">
-  <img src="https://i.ibb.co/J51Xdds/Edit-Profile1.png" alt="Edit-Profile1" border="0">
-  <img src="https://i.ibb.co/MZvk1kZ/Edit-Profile2.png" alt="Edit-Profile2" border="0">
-  <img src="https://i.ibb.co/1b2WRKn/My-Webtoon-Creation.png" alt="My-Webtoon-Creation" border="0">
-  <img src="https://i.ibb.co/Y7MSdvC/Create-Webtoon.png" alt="Create-Webtoon" border="0">
-  <img src="https://i.ibb.co/BgJfhPQ/Edit-Webtoon.png" alt="Edit-Webtoon" border="0">
-  <img src="https://i.ibb.co/MDg7W1g/Add-Episode.png" alt="Add-Episode" border="0">
-  <img src="https://i.ibb.co/6mpwzX4/Edit-Episode.png" alt="Edit-Episode" border="0">
-  <img src="https://i.ibb.co/FVHqs7J/Share-Webtoon.png" alt="Share-Webtoon" border="0">
+  <img src="https://i.ibb.co/thzdqDf/Login.png" alt="Login" border="0" width="200" height="350">
+  <img src="https://i.ibb.co/1Msqzjq/For-You.png" alt="For-You" border="0" width="200" height="350">
+  <img src="https://i.ibb.co/YffMYMV/For-You-2.png" alt="For-You-2" border="0" width="200" height="350">
+  <img src="https://i.ibb.co/wz4g7Yw/Detail-Webtoon.png" alt="Detail-Webtoon" border="0" width="200" height="350">
+  <img src="https://i.ibb.co/XDSPwRH/Detail-Episode.png" alt="Detail-Episode" border="0" width="200" height="350">
+  <img src="https://i.ibb.co/SQbMg0Z/Favourite.png" alt="Favourite" border="0" width="200" height="350">  
+  <img src="https://i.ibb.co/Vx8F1Yc/Profile.png" alt="Profile" border="0" width="200" height="350">
+  <img src="https://i.ibb.co/J51Xdds/Edit-Profile1.png" alt="Edit-Profile1" border="0" width="200" height="350">
+  <img src="https://i.ibb.co/MZvk1kZ/Edit-Profile2.png" alt="Edit-Profile2" border="0" width="200" height="350">
+  <img src="https://i.ibb.co/1b2WRKn/My-Webtoon-Creation.png" alt="My-Webtoon-Creation" border="0" width="200" height="350">
+  <img src="https://i.ibb.co/Y7MSdvC/Create-Webtoon.png" alt="Create-Webtoon" border="0" width="200" height="350">
+  <img src="https://i.ibb.co/BgJfhPQ/Edit-Webtoon.png" alt="Edit-Webtoon" border="0" width="200" height="350">
+  <img src="https://i.ibb.co/MDg7W1g/Add-Episode.png" alt="Add-Episode" border="0" width="200" height="350">
+  <img src="https://i.ibb.co/6mpwzX4/Edit-Episode.png" alt="Edit-Episode" border="0" width="200" height="350">
+  <img src="https://i.ibb.co/FVHqs7J/Share-Webtoon.png" alt="Share-Webtoon" border="0" width="200" height="350">
 </p>
 
 
