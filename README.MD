@@ -1,6 +1,6 @@
-## Clone Webtoon Project
+## Tint & Toon Project
 <h1 align="center">
-  <img src="https://lh3.googleusercontent.com/Df9MsTCq3VRBAoKPdpNA34QTWGQt5kqKuvkocPDuf9RD7BBsuM89SlNYPJM6p5-zEw=h300" width="300"/><br>
+  <img src="https://i.ibb.co/6PxC22r/comic-boom-explosion-2-2.png" alt="comic-boom-explosion-2-2" border="0"><br>
 </h1>
 
 ## Important
