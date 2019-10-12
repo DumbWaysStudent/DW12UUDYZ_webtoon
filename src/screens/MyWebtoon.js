@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
-import { StyleSheet, FlatList, Image } from 'react-native';
+import { StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import {
   Container,
   Text,
@@ -102,19 +102,14 @@ class MyWebtoon extends Component {
                 )}
                 keyExtractor={item => item}
               />
-              <Right>
-                <Button
-                  rounded
-                  success
-                  onPress={() =>
-                    this.props.navigation.navigate('CreateWebtoon')
-                  }>
-                  <Icon name="add" />
-                </Button>
-              </Right>
             </View>
           </View>
         </Content>
+        <TouchableOpacity
+          style={styles.fab}
+          onPress={() => this.props.navigation.navigate('CreateWebtoon')}>
+          <Text style={styles.text}>+</Text>
+        </TouchableOpacity>
       </Container>
     );
   }
@@ -183,6 +178,21 @@ const styles = StyleSheet.create({
   btnFavorite: {
     height: 20,
     width: 120,
+  },
+  fab: {
+    height: 50,
+    width: 50,
+    borderRadius: 200,
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#3BAD87',
+  },
+  text: {
+    fontSize: 30,
+    color: 'white',
   },
 });
 
