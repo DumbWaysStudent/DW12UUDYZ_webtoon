@@ -223,7 +223,6 @@ const styles = StyleSheet.create({
   },
   textSubTitle: {
     fontSize: 18,
-    marginBottom: 4,
     fontWeight: 'bold',
   },
   textSlideShow: {
@@ -235,7 +234,7 @@ const styles = StyleSheet.create({
   favItem: {
     marginStart: 20,
     marginHorizontal: 10,
-    marginVertical: 10,
+    marginVertical: 5,
     borderRadius: 15,
   },
   viewAddFav: {

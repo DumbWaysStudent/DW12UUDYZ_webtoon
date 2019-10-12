@@ -8,7 +8,6 @@ import {
   Content,
   Right,
   Button,
-  Icon,
   Label,
   Item,
   Input,

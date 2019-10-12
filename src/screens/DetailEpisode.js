@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, FlatList, SafeAreaView, Image } from 'react-native';
-import { Container, Text, View, Content, Item } from 'native-base';
+import { StyleSheet, FlatList, Image } from 'react-native';
+import { Container, View, Content } from 'native-base';
 
 class DetailEpisode extends Component {
   static navigationOptions = ({ navigation }) => {

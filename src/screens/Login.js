@@ -61,14 +61,13 @@ class Login extends Component {
         }
     };
 
-
     render() {
         return (
             <Container style={styles.container}>
                 <View style={styles.viewContent}>
-                    <Text style={styles.textTitle}>LOG IN</Text>
+                    <Text style={styles.textTitle}>tint&Toon</Text>
                     <Text style={styles.textSubTitle}>
-                        Login with your account WEBTOON
+                        Log-in with your account tint&Toon
                     </Text>
                     <Item floatingLabel style={[styles.itemInput, !this.state.isValidEmail ? styles.textInputError : null]}>
                         <Label>
@@ -97,7 +96,8 @@ class Login extends Component {
                             }}
                         />
                     </Item>
-                    <Button full warning rounded
+                    <Button full success
+                        style={{ borderRadius: 7}}
                         disabled={!this.state.isValidLogin}
                         onPress={() => this.props.navigation.navigate('ForYou')}
                     >
@@ -123,10 +123,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     textTitle: {
+        color: '#3BAD87',
         fontSize: 40,
         textAlign: 'center',
     },
     textSubTitle: {
+        color: '#3BAD87',
         fontSize: 15,
         marginBottom: '10%',
         textAlign: 'center',
@@ -136,7 +138,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     },
     textButton: {
-        color: 'black',
+        color: 'white',
     },
     itemInput: {
         marginBottom: '3%',

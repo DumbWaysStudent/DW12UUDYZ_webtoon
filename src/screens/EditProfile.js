@@ -70,7 +70,7 @@ class EditProfile extends Component
                         </View>
                     </TouchableOpacity>
                     <Item style={styles.textInput} >
-                        <Input placeholder="Your Name"/>
+                        <Input placeholder="Nama Saya Disini"/>
                     </Item>       
                 </View>
             </View>
