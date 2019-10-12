@@ -19,10 +19,12 @@ import {
   Button,
 } from 'native-base';
 import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Slideshow from 'react-native-image-slider-show';
 import Favourite from './Favourite';
 import Profile from './Profile';
+import EditProfile from './EditProfile';
 
 class ForYou extends Component {
   constructor(props) {
@@ -255,6 +257,21 @@ const styles = StyleSheet.create({
   },
 });
 
+const stack = createStackNavigator({
+  Profile: {
+    screen: Profile,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  EditProfile: {
+    screen: EditProfile,
+    navigationOptions: {
+      header: null,
+    },
+  },
+});
+
 const TabNavigator = createMaterialBottomTabNavigator(
   {
     ForYou: {
@@ -283,7 +300,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
       },
     },
     Profile: {
-      screen: Profile,
+      screen: stack,
       navigationOptions: {
         headerLeft: null,
         headerRight: (

@@ -1,77 +1,96 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity, PixelRatio } from 'react-native';
-import { Input, View, Icon, Image, Item } from 'native-base';
+import { StyleSheet, TouchableOpacity, PixelRatio, Image, Text } from 'react-native';
+import { Input, View, Icon, Item, Right, Left, Header } from 'native-base';
 import ImagePicker from 'react-native-image-picker';
 
 class EditProfile extends Component
 {
-    state = {
-        avatarSource: null,
-    };
 
     constructor(props)
     {
         super(props);
-        this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
+        const { navigation } = this.props;
+        this.state = {
+            avatarSource: null,
+            imageProfile: navigation.getParam('imageProfile'),
+            nameProfile: navigation.getParam('name')
+        };
     }
 
-    selectPhotoTapped()
+    handleEditPhoto = () =>
     {
         const options = {
-            quality: 1.0,
-            maxWidth: 500,
-            maxHeight: 500,
+            title: 'Select Photo',
             storageOptions: {
                 skipBackup: true,
+                path: 'images',
             },
         };
 
-        ImagePicker.showImagePicker(options, response =>
+        ImagePicker.showImagePicker(options, res =>
         {
-            console.log('Response = ', response);
-
-            if (response.didCancel)
+            if (res.didCancel)
             {
-                console.log('User cancelled photo picker');
-            } else if (response.error)
+                alert('Edit Poto Canceled');
+            } else if (res.error)
             {
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton)
+                console.log(res.error);
+                alert('Response Erorr');
+            } else if (res.customButton)
             {
-                console.log('User tapped custom button: ', response.customButton);
+                console.log(res.customButton);
             } else
             {
-                let source = { uri: response.uri };
-
-                // You can also display the image using data:
-                // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-                this.setState({
-                    avatarSource: source,
-                });
+                const sourceImage = res.uri;
+                this.setState({ imageProfile: sourceImage });
             }
         });
-    }
+    };
+    
     render()
     {
+        const { imageProfile, isEditProfile, nameProfile } = this.state;
+        const { goBack } = this.props.navigation;
         return (
-            <View style={{ flex: 1, justifyContent: 'center' }}>
+            <View style={{ flex: 1 }}>
+                <Header style={styles.headerStyle}>
+                    <Left style={{ marginStart: 10 }}><Icon onPress={() => goBack()} name="arrow-back" style={{ color: 'white' }} /></Left><Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>Edit Profile</Text>
+                    <Right style={{ marginEnd: 10 }}><Icon name="checkmark" style={{ color: 'white' }}
+                        onPress={() =>
+                        {
+                            this.props.navigation.navigate('Profile', {
+                                image: this.state.imageProfile,
+                                name:
+                                    nameProfile !== nameProfile
+                                        ? this.props.navigation.getParam('name')
+                                        : nameProfile,
+                            });
+                        }} />
+                    </Right>
+                </Header>
                 <View style={styles.viewContent}>
-                    <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-                        <View
-                            style={[styles.avatar, styles.avatarContainer, { marginBottom: 20 }]}>
-                            {this.state.avatarSource === null ? (
-                                <Icon style={styles.textTitle} name="contact" />
-                            ) : (
-                                <Image style={styles.avatar} source={this.state.avatarSource} />
-                            )}
-                        </View>
+                    <Image
+                        style={styles.avatar}
+                        source={{
+                            uri: imageProfile,
+                        }}
+                    />
+                    <TouchableOpacity onPress={() => this.handleEditPhoto()}>
+                        <Icon name="camera" />
                     </TouchableOpacity>
-                    <Item style={styles.textInput} >
-                        <Input placeholder="Nama Saya Disini"/>
-                    </Item>       
+                    <Item style={{ paddingHorizontal: 40 }}>
+                        <Input
+                            value={nameProfile}
+                            placeholder={
+                                !this.props.navigation.getParam('name')
+                                    ? nameProfile
+                                    : this.props.navigation.getParam('name')
+                            }
+                            onChangeText={text => this.setState({ nameProfile: text })}
+                        />
+                    </Item>  
                 </View>
             </View>
         );
@@ -101,14 +120,21 @@ const styles = StyleSheet.create({
         textAlign: 'justify',
     },
     avatarContainer: {
+        marginTop: '20%',
         borderColor: '#9B9B9B',
         borderWidth: 1 / PixelRatio.get(),
         alignItems: 'center',
     },
     avatar: {
+        marginTop: '20%',
         borderRadius: 75,
         width: 150,
         height: 150,
+    },
+    headerStyle: {
+        alignItems: 'center',
+        backgroundColor: '#3BAD87',
+        color: '#3BAD87',
     },
 });
 

@@ -35,12 +35,6 @@ const onShare = async () => {
 };
 
 const AuthStack = createStackNavigator({
-  Login: {
-    screen: Login,
-    navigationOptions: {
-      header: null,
-    },
-  },
   ForYou: {
     screen: ForYou,
     navigationOptions: {
@@ -73,41 +67,6 @@ const AuthStack = createStackNavigator({
       headerRight: (
         // eslint-disable-next-line react-native/no-inline-styles
         <Icon style={{ color: 'white' }} name="share" onPress={onShare} />
-      ),
-      headerStyle: {
-        backgroundColor: '#3BAD87',
-      },
-      headerRightContainerStyle: {
-        marginEnd: 15,
-      },
-      headerTintColor: '#fff',
-    },
-  },
-  Profile: {
-    screen: Profile,
-    navigationOptions: {
-      headerLeft: null,
-      headerRight: (
-        // eslint-disable-next-line react-native/no-inline-styles
-        <Icon style={{ color: 'white' }} name="create" onPress={onShare} />
-      ),
-      headerStyle: {
-        backgroundColor: '#3BAD87',
-      },
-      headerRightContainerStyle: {
-        marginEnd: 15,
-      },
-      headerTintColor: '#fff',
-    },
-  },
-  EditProfile: {
-    screen: EditProfile,
-    navigationOptions: {
-      headerTitle: 'Edit Profile',
-      headerLeft: null,
-      headerRight: (
-        // eslint-disable-next-line react-native/no-inline-styles
-        <Icon style={{ color: 'white' }} name="create" />
       ),
       headerStyle: {
         backgroundColor: '#3BAD87',
@@ -203,7 +162,7 @@ const AuthStack = createStackNavigator({
 
 const App = createSwitchNavigator({
   App: {
-    screen: Login,
+    screen: AuthStack,
   },
   Auth: {
     screen: AuthStack,

@@ -1,34 +1,70 @@
 /* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
-import { Text, View, Icon, List, ListItem } from 'native-base';
+import { StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Text, View, Icon, List, ListItem, Header, Right, Left } from 'native-base';
+import HeaderProfile from '../components/HeaderProfile';
 
 const routes = [
     { id: 1, title: 'My Webtoon Creation', icon: '', nextAction: 'MyWebtoon' },
-    { id: 2, title: 'Edit Profile', icon: '', nextAction: 'EditProfile' },
-    { id: 3, title: 'Log Out', icon: '', nextAction: 'Login' },
+    { id: 2, title: 'Log Out', icon: '', nextAction: 'Login' },
 
 ];
 
+
 class Profile extends Component {
-    static navigationOptions = ({ navigation }) =>
+    constructor(props)
     {
-        const { params } = navigation.state;
-        return {
-            title: params ? params.otherTitle : 'No Title',
+        super(props);
+        this.state = {
+            imageProfile: 'https://www.clipartwiki.com/clipimg/detail/248-2480210_user-staff-man-profile-person-icon-circle-png.png',
+            isEditProfile: false,
+            nameProfile: 'ArdiW',
         };
-    };
+    }
+    
     render() {
+        const { imageProfile, isEditProfile, nameProfile } = this.state;
         return (
             <View style={styles.viewContent}>
-                <Icon style={styles.textTitle} name="contact" />
+                <Header style={styles.headerStyle}>
+                    <Left style={{ marginStart: 10 }}><Text style={{color:'white', fontSize: 25, fontWeight:'bold'}}>Profile</Text></Left>
+                    <Right style={{ marginEnd: 10 }}><Icon name="create" style={{ color: 'white' }} 
+                        onPress={() => {
+                            this.props.navigation.navigate('EditProfile', {
+                                imageProfile: !this.props.navigation.getParam('image')
+                                    ? imageProfile
+                                    : this.props.navigation.getParam('image'),
+                                name: !this.props.navigation.getParam('name')
+                                    ? nameProfile
+                                    : this.props.navigation.getParam('name')
+                            });
+                        } }/>
+                    </Right>
+                </Header>
+                <View style={{
+                    alignItems: 'center',
+                    marginTop: '15%',}}>
+                <Image
+                    style={styles.img}
+                    source={{
+                        uri: !this.props.navigation.getParam('image')
+                            ? imageProfile
+                            : this.props.navigation.getParam('image'),
+                    }}
+                />
                 <Text style={styles.textSubTitle}>
-                    Your Name
+                    {!this.props.navigation.getParam('name')
+                    ? nameProfile
+                    : this.props.navigation.getParam('name')}
                 </Text>
-                <List dataArray={routes} renderRow={(data) =>
-                    <ListItem onPress={() => this.props.navigation.navigate(data.nextAction)}>
+                </View>
+                <View>
+                    <List dataArray={routes} renderRow={(data) =>
+                        <ListItem onPress={() => this.props.navigation.navigate(data.nextAction)}
+                    >
                             <Text style={styles.dataList}>{data.title}</Text>
                     </ListItem>} />
+                </View>
             </View>
         );
     }
@@ -38,15 +74,17 @@ export default Profile;
 
 const styles = StyleSheet.create({
     viewContent: {
-        marginTop: '15%',
         flex: 1,
-        justifyContent: 'center',
-        backgroundColor: '#f5f6fa',
+        backgroundColor: '#fff',
     },
     textTitle: {
         fontSize: 150,
         textAlign: 'center',
         color: 'grey',
+    },
+    headerStyle: {
+        backgroundColor: '#3BAD87',
+        color: '#3BAD87',
     },
     textSubTitle: {
         fontSize: 20,
@@ -57,5 +95,5 @@ const styles = StyleSheet.create({
     dataList: {
         textAlign: 'justify',
     },
-
+    img: { height: 150, width: 150, borderRadius: 100 },
 });
