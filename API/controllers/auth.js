@@ -11,6 +11,8 @@ exports.login = (req, res) => {
     if (user) {
       const token = jwt.sign({ userId: user.id }, 'my-secret-key');
       res.send({
+        success: true,
+        message: 'User logged in successfully',
         email,
         token,
       });
@@ -20,5 +22,17 @@ exports.login = (req, res) => {
         message: 'Wrong Email or Password!',
       });
     }
+  });
+};
+
+exports.register = (req, res) => {
+  User.create(req.body).then(user => {
+    const token = jwt.sign({ userId: user.id }, 'my-secret-key');
+    res.send({
+      success: true,
+      message: 'User logged in successfully',
+      data: { user },
+      token,
+    });
   });
 };
