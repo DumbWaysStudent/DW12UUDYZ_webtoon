@@ -16,6 +16,7 @@ const AuthController = require('./controllers/auth');
 const UsersController = require('./controllers/users');
 const WebtoonsController = require('./controllers/webtoons');
 const EpisodesController = require('./controllers/episodes');
+const EpisodeImagesController = require('./controllers/episodeImages');
 
 //middlewares
 const { authenticated } = require('./middleware');
@@ -38,6 +39,9 @@ app.group('/api/v1', router => {
 
   //API Episodes
   router.get('/webtoon/:id_webtoon/episodes', EpisodesController.index);
+
+  //API EpisodesImages
+  router.get('/webtoon/episode/:id_episode', EpisodeImagesController.index);
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));
