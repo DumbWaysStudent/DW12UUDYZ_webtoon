@@ -41,10 +41,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Users', [
-      {
-        title: 'Naruto',
-      },
-    ]);
+    return queryInterface.bulkDelete('webtoons', null, {});
   },
 };
