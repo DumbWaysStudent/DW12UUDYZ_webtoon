@@ -1,20 +1,23 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('users', {
+    return queryInterface.createTable('webtoons', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      email: {
+      title: {
         type: Sequelize.STRING,
       },
-      password: {
+      genre: {
         type: Sequelize.STRING,
       },
-      name: {
+      isFavorite: {
+        type: Sequelize.BOOLEAN,
+      },
+      image: {
         type: Sequelize.STRING,
       },
       createdAt: {
@@ -25,9 +28,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
+      createdBy: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('webtoons');
   },
 };
