@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const models = require('../models');
 const User = models.users;
+const Webtoon = models.webtoons;
 
 exports.index = (req, res) => {
   User.findAll().then(users => res.send(users));
@@ -10,6 +11,14 @@ exports.show = (req, res) => {
   User.findAll({
     where: {
       id: req.params.id,
+    },
+  }).then(users => res.send(users));
+};
+
+exports.showWebtoon = (req, res) => {
+  Webtoon.findAll({
+    where: {
+      createdBy: req.params.id,
     },
   }).then(users => res.send(users));
 };

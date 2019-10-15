@@ -31,6 +31,7 @@ app.group('/api/v1', router => {
   router.get('/user/:id', authenticated, UsersController.show);
   router.patch('/user/:id', authenticated, UsersController.update);
   router.delete('/user/:id', authenticated, UsersController.delete);
+  router.get('/user/:id/webtoons', authenticated, UsersController.showWebtoon);
 
   //API Webtoons
   router.get('/webtoons', WebtoonsController.index);
