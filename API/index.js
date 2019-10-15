@@ -27,14 +27,18 @@ app.group('/api/v1', router => {
   router.post('/register', AuthController.register);
 
   //API Users
-  router.get('/users', authenticated, UsersController.index);
+  router.get('/users', UsersController.index);
   router.get('/user/:id', authenticated, UsersController.show);
   router.patch('/user/:id', authenticated, UsersController.update);
   router.delete('/user/:id', authenticated, UsersController.delete);
 
   //API Webtoons
   router.get('/webtoons', WebtoonsController.index);
-  //   router.get('/webtoons/isFavorite=:favorite', WebtoonsController.showFav);
+  router.get(
+    '/webtoons/isFavorite=:favorite',
+    authenticated,
+    WebtoonsController.showFav,
+  );
   //   router.get('/webtoons/title=:title', WebtoonsController.show);
 
   //API Episodes

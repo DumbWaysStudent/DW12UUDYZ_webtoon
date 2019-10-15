@@ -14,13 +14,13 @@ exports.index = (req, res) => {
 //   }).then(webtoons => res.send(webtoons));
 // };
 
-// exports.showFav = (req, res) => {
-//   Webtoon.findAll({
-//     where: {
-//       isFavorite: req.params.favorite,
-//     },
-//   }).then(webtoons => res.send(webtoons));
-// };
+exports.showFav = (req, res) => {
+  Webtoon.findAll({
+    where: {
+      isFavorite: req.params.favorite,
+    },
+  }).then(webtoons => res.send(webtoons));
+};
 
 exports.store = (req, res) => {
   Webtoon.create(req.body).then(webtoon => {
