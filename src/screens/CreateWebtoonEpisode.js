@@ -42,7 +42,7 @@ class CreateWebtoonEpisode extends Component {
           <View style={styles.viewContent}>
             <Label style={[styles.textSubTitle, { marginTop: 15 }]}>Name</Label>
             <Item style={styles.textInput}>
-              <Input />
+              <Input placeholder="Input Name Episode Here" />
             </Item>
             <Label style={styles.textSubTitle}>Add Image</Label>
             <View style={styles.viewColor}>
@@ -56,15 +56,18 @@ class CreateWebtoonEpisode extends Component {
                     <Image
                       style={{
                         width: 80,
-                        height: 80,
-                        borderWidth: 3,
+                        height: 120,
+                        borderWidth: 1,
                         borderColor: 'grey',
+                        borderRadius: 7,
                       }}
                       source={{ uri: item.url }}
                     />
                     <View style={styles.viewListItem}>
                       <Text>{item.title}</Text>
-                      <Button danger style={{ height: 25, width: 85 }}>
+                      <Button
+                        danger
+                        style={{ height: 25, width: 75, borderRadius: 3 }}>
                         <Text>Delete</Text>
                       </Button>
                     </View>
@@ -72,11 +75,9 @@ class CreateWebtoonEpisode extends Component {
                 )}
                 keyExtractor={item => item}
               />
-              <Right>
-                <Button success style={styles.btnComponent}>
-                  <Text style={styles.txtBtn}>+  Image</Text>
-                </Button>
-              </Right>
+              <Button success style={styles.btnComponent}>
+                <Text style={styles.txtBtn}>+ Image</Text>
+              </Button>
             </View>
           </View>
         </Content>
@@ -105,6 +106,7 @@ const styles = StyleSheet.create({
   viewColor: {
     backgroundColor: '#ffffff',
     alignItems: 'center',
+    textAlign: 'center',
   },
   inputText: {
     width: '95%',
@@ -149,8 +151,8 @@ const styles = StyleSheet.create({
   btnComponent: {
     borderRadius: 7,
     marginTop: 10,
-    width: 100,
-    alignItems: 'center',
+    width: 80,
+    textAlign: 'center',
   },
   txtBtn: {
     textAlign: 'center',

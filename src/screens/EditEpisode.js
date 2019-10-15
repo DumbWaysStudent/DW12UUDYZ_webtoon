@@ -56,9 +56,10 @@ class EditEpisode extends Component {
                     <Image
                       style={{
                         width: 80,
-                        height: 80,
-                        borderWidth: 3,
+                        height: 120,
+                        borderWidth: 1,
                         borderColor: 'grey',
+                        borderRadius: 7,
                       }}
                       source={{ uri: item.url }}
                     />
@@ -69,12 +70,14 @@ class EditEpisode extends Component {
                 )}
                 keyExtractor={item => item}
               />
-              <Button style={styles.btnComponent} success>
-                <Text>+  Image</Text>
-              </Button>
-              <Button style={styles.btnComponent} danger>
-                <Text style={styles.txtBtn}>Delete Episode</Text>
-              </Button>
+              <View style={{ flexDirection: 'row' }}>
+                <Button style={styles.btnComponent} success>
+                  <Text>+ Image</Text>
+                </Button>
+                <Button style={styles.btnComponentDelete} danger>
+                  <Text style={styles.txtBtn}>Delete Episode</Text>
+                </Button>
+              </View>
             </View>
           </View>
         </Content>
@@ -148,16 +151,24 @@ const styles = StyleSheet.create({
     height: 20,
     width: 120,
   },
-    btnComponent: {
-        borderRadius: 7,
-        marginTop: 10,
-        width: 150,
-        textAlign: 'center',
-        alignItems: 'center',
-    },
-    txtBtn: {
-        textAlign: 'center',
-    },
+  btnComponent: {
+    borderRadius: 7,
+    marginTop: 15,
+    marginEnd: 15,
+    width: 80,
+    textAlign: 'center',
+    alignItems: 'center',
+  },
+  btnComponentDelete: {
+    borderRadius: 7,
+    marginTop: 15,
+    width: 100,
+    textAlign: 'center',
+    alignItems: 'center',
+  },
+  txtBtn: {
+    textAlign: 'center',
+  },
 });
 
 export default EditEpisode;

@@ -85,7 +85,7 @@ class ForYou extends Component {
             <View style={styles.viewColor}>
               <Item
                 rounded
-                style={[styles.inputText, { width: '90%', marginTop: 20 }]}
+                style={[styles.inputText, { width: '100%', marginTop: 20 }]}
                 regular>
                 <Input placeholder="Pencarian" />
                 <Icon active name="search" />
@@ -113,7 +113,6 @@ class ForYou extends Component {
                       { paddingTop: 10, marginBottom: 10 },
                     ]}>
                     <FlatList
-                      style={styles.itemMarginBottom}
                       horizontal
                       showsHorizontalScrollIndicator={false}
                       data={this.state.banners}
@@ -127,10 +126,12 @@ class ForYou extends Component {
                             }>
                             <Image
                               style={{
-                                width: 100,
+                                width: 150,
                                 height: 100,
-                                borderWidth: 3,
+                                borderWidth: 0.5,
+                                shadowColor: 10,
                                 borderColor: 'grey',
+                                borderRadius: 7,
                               }}
                               source={{ uri: item.url }}
                             />
@@ -153,10 +154,11 @@ class ForYou extends Component {
                       <View style={styles.viewAddFav}>
                         <Image
                           style={{
-                            width: 60,
-                            height: 60,
-                            borderWidth: 3,
+                            width: 80,
+                            height: 80,
+                            borderWidth: 1,
                             borderColor: 'grey',
+                            borderRadius: 7,
                           }}
                           source={{ uri: item.url }}
                         />
@@ -170,7 +172,7 @@ class ForYou extends Component {
                                 otherTitle: item.title,
                               })
                             }>
-                            <Text> + Favorite </Text>
+                            <Text>+ Favorite</Text>
                           </Button>
                         </View>
                       </View>
@@ -193,7 +195,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   viewContent: {
-    marginStart: 5,
+    marginStart: 10,
     width: '95%',
     alignItems: 'center',
     borderRadius: 15,
@@ -210,9 +212,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   itemSliderImage: {
-    width: '90%',
-    borderWidth: 3,
-    borderColor: 'grey',
+    width: '100%',
+    borderRadius: 7,
   },
   itemMarginBottom: {
     marginBottom: 10,
@@ -253,7 +254,8 @@ const styles = StyleSheet.create({
   },
   btnFavorite: {
     height: 20,
-    width: 120,
+    width: 100,
+    textAlign: 'center',
   },
 });
 

@@ -63,7 +63,7 @@ class CreateWebtoon extends Component {
               Title
             </Label>
             <Item style={styles.textInput}>
-              <Input />
+              <Input placeholder="Input Title Here" />
             </Item>
             <Label style={styles.textSubTitle}>Episode</Label>
             <View style={styles.viewColor}>
@@ -76,10 +76,11 @@ class CreateWebtoon extends Component {
                   <View style={styles.viewAddFav}>
                     <Image
                       style={{
-                        width: 60,
-                        height: 60,
-                        borderWidth: 3,
+                        width: 80,
+                        height: 80,
+                        borderWidth: 1,
                         borderColor: 'grey',
+                        borderRadius: 7,
                       }}
                       source={{ uri: item.url }}
                     />
@@ -114,7 +115,7 @@ class CreateWebtoon extends Component {
 const styles = StyleSheet.create({
   textInput: {
     borderWidth: 4,
-    height: '10%',
+    height: '7%',
     fontSize: 40,
     width: '90%',
     marginBottom: 10,
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
   },
   inputText: {
     width: '95%',
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 10,
     borderRadius: 15,
   },
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     marginTop: 10,
     marginBottom: 30,
-    width: 150,
+    width: 118,
     alignItems: 'center',
   },
   txtBtn: {

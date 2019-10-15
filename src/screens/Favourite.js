@@ -86,10 +86,11 @@ class Favourite extends Component {
                         })
                       }
                       style={{
-                        width: 60,
-                        height: 60,
-                        borderWidth: 3,
+                        width: 80,
+                        height: 80,
+                        borderWidth: 1,
                         borderColor: 'grey',
+                        borderRadius: 7,
                       }}
                       source={{ uri: item.url }}
                     />
@@ -130,17 +131,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   viewContent: {
-    marginStart: 5,
-    marginEnd: 5,
+    marginStart: 13,
+    marginEnd: 10,
     alignItems: 'center',
     borderRadius: 15,
+    width: '95%',
   },
   viewColor: {
     backgroundColor: '#ffffff',
     alignItems: 'center',
   },
   inputText: {
-    width: '95%',
+    width: '100%',
     marginTop: 20,
     marginBottom: 10,
     borderRadius: 15,

@@ -69,10 +69,11 @@ class EditMyWebtoon extends Component {
                         })
                       }
                       style={{
-                        width: 60,
-                        height: 60,
-                        borderWidth: 3,
+                        width: 80,
+                        height: 80,
+                        borderWidth: 1,
                         borderColor: 'grey',
+                        borderRadius: 7,
                       }}
                       source={{ uri: item.url }}
                     />
@@ -99,7 +100,7 @@ class EditMyWebtoon extends Component {
                 )}
                 keyExtractor={item => item}
               />
-              <Right>
+              <View style={styles.viewRow}>
                 <Button
                   style={styles.btnComponent}
                   success
@@ -116,7 +117,7 @@ class EditMyWebtoon extends Component {
                   }>
                   <Text style={styles.txtBtn}>Delete Webtoon</Text>
                 </Button>
-              </Right>
+              </View>
             </View>
           </View>
         </Content>
@@ -186,10 +187,14 @@ const styles = StyleSheet.create({
     marginStart: 10,
     justifyContent: 'center',
   },
+  viewRow: {
+    flexDirection: 'row',
+  },
   btnComponent: {
     borderRadius: 7,
-    marginTop: 10,
-    width: 150,
+    marginTop: 15,
+    marginEnd: 15,
+    width: 118,
     alignItems: 'center',
   },
   txtBtn: {

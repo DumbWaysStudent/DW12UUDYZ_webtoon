@@ -1,15 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
 import { StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
-import {
-  Container,
-  Text,
-  View,
-  Content,
-  Right,
-  Button,
-  Icon,
-} from 'native-base';
+import { Container, Text, View, Content } from 'native-base';
 
 class MyWebtoon extends Component {
   constructor(props) {
@@ -72,10 +64,11 @@ class MyWebtoon extends Component {
                         })
                       }
                       style={{
-                        width: 60,
-                        height: 60,
-                        borderWidth: 3,
+                        width: 80,
+                        height: 80,
+                        borderWidth: 1,
                         borderColor: 'grey',
+                        borderRadius: 7,
                       }}
                       source={{ uri: item.url }}
                     />
@@ -136,6 +129,7 @@ const styles = StyleSheet.create({
   viewColor: {
     backgroundColor: '#ffffff',
     alignItems: 'center',
+    marginTop: 20,
   },
   inputText: {
     width: '95%',

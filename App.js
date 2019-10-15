@@ -7,8 +7,6 @@ import Login from './src/screens/Login';
 import ForYou from './src/screens/ForYou';
 import DetailWebToon from './src/screens/DetailWebToon';
 import DetailEpisode from './src/screens/DetailEpisode';
-import Profile from './src/screens/Profile';
-import EditProfile from './src/screens/EditProfile';
 import MyWebtoon from './src/screens/MyWebtoon';
 import CreateWebtoon from './src/screens/CreateWebtoon';
 import CreateWebtoonEpisode from './src/screens/CreateWebtoonEpisode';
@@ -162,7 +160,7 @@ const AuthStack = createStackNavigator({
 
 const App = createSwitchNavigator({
   App: {
-    screen: AuthStack,
+    screen: Login,
   },
   Auth: {
     screen: AuthStack,
