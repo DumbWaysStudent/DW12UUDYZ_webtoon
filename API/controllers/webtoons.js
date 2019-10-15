@@ -1,18 +1,20 @@
 const jwt = require('jsonwebtoken');
 const models = require('../models');
+const Sequelize = require('sequelize');
 const Webtoon = models.webtoons;
+const Op = Sequelize.Op;
 
 exports.index = (req, res) => {
   Webtoon.findAll().then(webtoons => res.send(webtoons));
 };
 
-// exports.show = (req, res) => {
-//   Webtoon.findAll({
-//     where: {
-//       title: req.params.title,
-//     },
-//   }).then(webtoons => res.send(webtoons));
-// };
+exports.show = (req, res) => {
+  Webtoon.findAll({
+    where: {
+      title: { [Op.like]: req.params.title + '%' },
+    },
+  }).then(webtoons => res.send(webtoons));
+};
 
 exports.showFav = (req, res) => {
   Webtoon.findAll({

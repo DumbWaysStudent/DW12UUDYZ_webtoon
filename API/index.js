@@ -39,7 +39,7 @@ app.group('/api/v1', router => {
     authenticated,
     WebtoonsController.showFav,
   );
-  //   router.get('/webtoons/title=:title', WebtoonsController.show);
+  router.get('/webtoons/title=:title', WebtoonsController.show);
 
   //API Episodes
   router.get('/webtoon/:id_webtoon/episodes', EpisodesController.index);
