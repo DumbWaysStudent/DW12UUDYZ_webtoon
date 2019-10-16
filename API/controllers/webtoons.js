@@ -24,31 +24,37 @@ exports.showFav = (req, res) => {
   }).then(webtoons => res.send(webtoons));
 };
 
-exports.store = (req, res) => {
+exports.showWebtoon = (req, res) => {
+  Webtoon.findAll({
+    where: {
+      createdBy: req.params.id,
+    },
+  }).then(users => res.send(users));
+};
+
+exports.storeWebtoon = (req, res) => {
   Webtoon.create(req.body).then(webtoon => {
-    const token = jwt.sign({ webtoonId: webtoon.id }, 'my-secret-key');
     res.send({
       message: 'success',
-      token,
       webtoon,
     });
   });
 };
 
-exports.update = (req, res) => {
-  Webtoon.update(req.body, { where: { id: req.params.id } }).then(user => {
+exports.updateWebtoon = (req, res) => {
+  Webtoon.update(req.body, { where: { id: req.params.id } }).then(webtoon => {
     res.send({
       message: 'success',
-      user,
+      webtoon,
     });
   });
 };
 
-exports.delete = (req, res) => {
-  Webtoon.destroy({ where: { id: req.params.id } }).then(user => {
+exports.deleteWebtoon = (req, res) => {
+  Webtoon.destroy({ where: { id: req.params.id } }).then(webtoon => {
     res.send({
       message: 'success',
-      user,
+      webtoon,
     });
   });
 };
