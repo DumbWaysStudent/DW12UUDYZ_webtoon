@@ -79,6 +79,11 @@ app.group('/api/v1', router => {
     authenticated,
     EpisodesController.updateEpisode,
   );
+  router.delete(
+    '/user/webtoon/episode/:id_episode',
+    authenticated,
+    EpisodesController.deleteEpisode,
+  );
 
   //API EpisodesImages
   router.get('/webtoon/episode/:id_episode', EpisodeImagesController.index);

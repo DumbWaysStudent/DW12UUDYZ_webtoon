@@ -18,14 +18,14 @@ exports.showEpisodes = (req, res) => {
 };
 
 exports.storeEpisodes = (req, res) => {
-  Episode.create(req.body, { where: { id_webtoon: req.params.id } }).then(
-    episodes => {
-      res.send({
-        message: 'success',
-        episodes,
-      });
-    },
-  );
+  Episode.create(req.body, {
+    where: { id_webtoon: req.params.id_episode },
+  }).then(episodes => {
+    res.send({
+      message: 'success',
+      episodes,
+    });
+  });
 };
 
 exports.updateEpisode = (req, res) => {
@@ -37,4 +37,13 @@ exports.updateEpisode = (req, res) => {
       });
     },
   );
+};
+
+exports.deleteEpisode = (req, res) => {
+  Episode.destroy({ where: { id: req.params.id_episode } }).then(episode => {
+    res.send({
+      message: 'success',
+      episode,
+    });
+  });
 };
