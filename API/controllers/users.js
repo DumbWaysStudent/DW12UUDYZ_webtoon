@@ -61,8 +61,7 @@ exports.update = (req, res) => {
   });
 };
 
-exports.updateWebtoon = (req, res) =>
-{
+exports.updateWebtoon = (req, res) => {
   Webtoon.update(req.body, { where: { id: req.params.id } }).then(webtoon => {
     res.send({
       message: 'success',
@@ -76,6 +75,15 @@ exports.delete = (req, res) => {
     res.send({
       message: 'success',
       user,
+    });
+  });
+};
+
+exports.deleteWebtoon = (req, res) => {
+  Webtoon.destroy({ where: { id: req.params.id } }).then(webtoon => {
+    res.send({
+      message: 'success',
+      webtoon,
     });
   });
 };
