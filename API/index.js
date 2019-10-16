@@ -77,6 +77,11 @@ app.group('/api/v1', router => {
 
   //API EpisodesImages
   router.get('/webtoon/episode/:id_episode', EpisodeImagesController.index);
+  router.get(
+    '/user/webtoon/episode/:id_episode/images',
+    authenticated,
+    EpisodeImagesController.index,
+  );
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));
