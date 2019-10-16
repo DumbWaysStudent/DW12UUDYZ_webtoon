@@ -32,6 +32,12 @@ app.group('/api/v1', router => {
   router.patch('/user/:id', authenticated, UsersController.update);
   router.delete('/user/:id', authenticated, UsersController.delete);
   router.get('/user/:id/webtoons', authenticated, UsersController.showWebtoon);
+  router.get(
+    '/user/webtoon/:id_webtoon/episodes',
+    authenticated,
+    UsersController.showEpisodes,
+  );
+  router.post('/user/:id/webtoon', authenticated, UsersController.storeWebtoon);
 
   //API Webtoons
   router.get('/webtoons', WebtoonsController.index);

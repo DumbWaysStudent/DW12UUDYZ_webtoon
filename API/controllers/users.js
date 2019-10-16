@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const models = require('../models');
 const User = models.users;
 const Webtoon = models.webtoons;
+const Episode = models.episodes;
 
 exports.index = (req, res) => {
   User.findAll().then(users => res.send(users));
@@ -23,6 +24,14 @@ exports.showWebtoon = (req, res) => {
   }).then(users => res.send(users));
 };
 
+exports.showEpisodes = (req, res) => {
+  Episode.findAll({
+    where: {
+      id_webtoon: req.params.id_webtoon,
+    },
+  }).then(episodes => res.send(episodes));
+};
+
 exports.store = (req, res) => {
   User.create(req.body).then(user => {
     const token = jwt.sign({ userId: user.id }, 'my-secret-key');
@@ -30,6 +39,15 @@ exports.store = (req, res) => {
       message: 'success',
       token,
       user,
+    });
+  });
+};
+
+exports.storeWebtoon = (req, res) => {
+  Webtoon.create(req.body).then(webtoon => {
+    res.send({
+      message: 'success',
+      webtoon,
     });
   });
 };
