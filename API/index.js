@@ -30,14 +30,8 @@ app.group('/api/v1', router => {
   router.get('/users', UsersController.index);
   router.get('/user/:id', authenticated, UsersController.show);
   router.patch('/user/:id', authenticated, UsersController.update);
+  router.patch('/user/:id', authenticated, UsersController.update);
   router.delete('/user/:id', authenticated, UsersController.delete);
-  router.get('/user/:id/webtoons', authenticated, UsersController.showWebtoon);
-  router.get(
-    '/user/webtoon/:id_webtoon/episodes',
-    authenticated,
-    UsersController.showEpisodes,
-  );
-  router.post('/user/:id/webtoon', authenticated, UsersController.storeWebtoon);
 
   //API Webtoons
   router.get('/webtoons', WebtoonsController.index);
@@ -47,6 +41,14 @@ app.group('/api/v1', router => {
     WebtoonsController.showFav,
   );
   router.get('/webtoons/title=:title', WebtoonsController.show);
+  router.post('/user/:id/webtoon', authenticated, UsersController.storeWebtoon);
+  router.put('/user/webtoon/:id', authenticated, UsersController.updateWebtoon);
+  router.get('/user/:id/webtoons', authenticated, UsersController.showWebtoon);
+  router.get(
+    '/user/webtoon/:id_webtoon/episodes',
+    authenticated,
+    UsersController.showEpisodes,
+  );
 
   //API Episodes
   router.get('/webtoon/:id_webtoon/episodes', EpisodesController.index);
