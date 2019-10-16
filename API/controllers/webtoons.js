@@ -51,10 +51,11 @@ exports.updateWebtoon = (req, res) => {
 };
 
 exports.deleteWebtoon = (req, res) => {
-  Webtoon.destroy({ where: { id: req.params.id } }).then(webtoon => {
+  const id_webtoon = req.params.id;
+  Webtoon.destroy({ where: { id: id_webtoon } }).then(webtoon => {
     res.send({
       message: 'success',
-      webtoon,
+      id: id_webtoon,
     });
   });
 };

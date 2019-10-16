@@ -40,10 +40,11 @@ exports.updateEpisode = (req, res) => {
 };
 
 exports.deleteEpisode = (req, res) => {
-  Episode.destroy({ where: { id: req.params.id_episode } }).then(episode => {
+  const id_episode = req.params.id_episode;
+  Episode.destroy({ where: { id: id_episode } }).then(episode => {
     res.send({
       message: 'success',
-      episode,
+      id: id_episode,
     });
   });
 };
