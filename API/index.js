@@ -92,6 +92,11 @@ app.group('/api/v1', router => {
     authenticated,
     EpisodeImagesController.index,
   );
+  router.post(
+    '/user/webtoon/episode/:id_episode/image',
+    authenticated,
+    EpisodeImagesController.storeEpisodeImages,
+  );
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));
