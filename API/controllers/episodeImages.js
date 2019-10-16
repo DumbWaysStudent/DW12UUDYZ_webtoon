@@ -19,3 +19,13 @@ exports.storeEpisodeImages = (req, res) => {
     });
   });
 };
+
+exports.deleteEpisodeImage = (req, res) => {
+  const id_image = req.params.id_image;
+  EpisodeImage.destroy({ where: { id: id_image } }).then(episodeImages => {
+    res.send({
+      message: 'success',
+      id: id_image,
+    });
+  });
+};

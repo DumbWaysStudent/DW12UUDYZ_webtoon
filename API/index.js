@@ -97,6 +97,11 @@ app.group('/api/v1', router => {
     authenticated,
     EpisodeImagesController.storeEpisodeImages,
   );
+  router.delete(
+    '/user/webtoon/episode/image/:id_image',
+    authenticated,
+    EpisodeImagesController.deleteEpisodeImage,
+  );
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));
