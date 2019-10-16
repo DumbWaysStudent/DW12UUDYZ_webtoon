@@ -74,6 +74,11 @@ app.group('/api/v1', router => {
     authenticated,
     EpisodesController.storeEpisodes,
   );
+  router.put(
+    '/user/webtoon/episode/:id_episode',
+    authenticated,
+    EpisodesController.updateEpisode,
+  );
 
   //API EpisodesImages
   router.get('/webtoon/episode/:id_episode', EpisodeImagesController.index);

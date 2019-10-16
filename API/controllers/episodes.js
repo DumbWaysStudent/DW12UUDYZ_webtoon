@@ -27,3 +27,14 @@ exports.storeEpisodes = (req, res) => {
     },
   );
 };
+
+exports.updateEpisode = (req, res) => {
+  Episode.update(req.body, { where: { id: req.params.id_episode } }).then(
+    episode => {
+      res.send({
+        message: 'success',
+        episode,
+      });
+    },
+  );
+};
