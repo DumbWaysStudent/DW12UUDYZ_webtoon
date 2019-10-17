@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
-import { StyleSheet, Image, Alert } from 'react-native';
-import {
+import { StyleSheet, Image } from 'react-native';
+import
+{
     Container,
     Text,
     View,
@@ -15,8 +16,10 @@ import axios from 'axios';
 import deviceStorage from '../services/deviceStorage';
 import { AsyncStorage } from 'react-native';
 
-class Login extends Component {
-    constructor(props) {
+class Register extends Component
+{
+    constructor(props)
+    {
         super(props);
         this.state = {
             isShowPassword: false,
@@ -29,26 +32,34 @@ class Login extends Component {
         };
     }
 
-    onValidateEmail = text => {
+    onValidateEmail = text =>
+    {
         this.setState({ emailValue: text });
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (reg.test(text) === false) {
+        if (reg.test(text) === false)
+        {
             this.setState({ isValidEmail: false });
-        } else {
+        } else
+        {
             this.setState({ isValidEmail: true });
         }
     };
 
-    onValidatePassword = text => {
+    onValidatePassword = text =>
+    {
         this.setState({ passwordValue: text });
     };
 
-    onShowPassword = () => {
-        if (this.state.passwordValue !== '') {
+    onShowPassword = () =>
+    {
+        if (this.state.passwordValue !== '')
+        {
             !this.state.isShowPassword ? this.setState({ isShowPassword: true }) : this.setState({ isShowPassword: false });
-            if ((this.state.emailValue = this.state.userEmail) && (this.state.passwordValue === this.state.userPassword)) {
+            if ((this.state.emailValue = this.state.userEmail) && (this.state.passwordValue === this.state.userPassword))
+            {
                 this.setState({ isValidLogin: true });
-            } else {
+            } else
+            {
                 this.setState({ isValidLogin: false });
             }
         }
@@ -58,22 +69,25 @@ class Login extends Component {
     {
         const { emailValue, passwordValue } = this.state;
 
-        axios.post('http://192.168.137.1:5000/api/v1/login', {
+        axios.post('http://192.168.0.53:5000/api/v1/login', {
             email: emailValue,
             password: passwordValue,
-        }).then((response) => {
+        }).then((response) =>
+        {
             console.log(response);
             deviceStorage.saveItem('id_token', response.data.token);
             AsyncStorage.getItem('id_token', (_err, result) =>
             {
                 console.log(result);
-                this.props.navigation.navigate('ForYou');
             });
-        }).catch((error) => {
+        }).catch((error) =>
+        {
+            console.log(error);
         });
     };
 
-    render() {
+    render()
+    {
         return (
             <Container style={styles.container}>
                 <View style={styles.viewContent}>
@@ -85,15 +99,14 @@ class Login extends Component {
                         source={{ uri: 'https://i.ibb.co/SRX5RMn/comic-boom-explosion-2-1.png' }}
                     />
                     <Text style={styles.textSubTitle}>
-                        Already have an Account? 
-                        Login Now!
+                        Register Now
                     </Text>
                     <Item floatingLabel style={[styles.itemInput, !this.state.isValidEmail ? styles.textInputError : null]}>
                         <Label style={styles.textLabel}>
                             Email
                         </Label>
                         <Input
-                            style={{color:'white'}}
+                            style={{ color: 'white' }}
                             placeholder="Email"
                             autoCapitalize="none"
                             onChangeText={text => this.onValidateEmail(text)}
@@ -111,26 +124,30 @@ class Login extends Component {
                             value={this.state.passwordValue}
                         />
                         <Icon
-                            style={{ color:'#f5f6fa'}}
+                            style={{ color: '#f5f6fa' }}
                             active name={!this.state.isShowPassword ? 'eye-off' : 'eye'}
-                            onPress={() => {
+                            onPress={() =>
+                            {
                                 this.onShowPassword();
                             }}
                         />
                     </Item>
                     <Button full success
                         // eslint-disable-next-line react-native/no-inline-styles
-                        style={{ borderRadius: 7, backgroundColor: '#ecf0f1'}}
-                        onPress={() => {
+                        style={{ borderRadius: 7, backgroundColor: '#ecf0f1' }}
+                        disabled={!this.state.isValidLogin}
+                        onPress={() =>
+                        {
                             this.loginUser();
                         }}
                     >
                         <Text style={styles.textButton}>Log In</Text>
                     </Button>
-                    <Text style={styles.textSubTitle} onPress={() =>
-                        this.props.navigation.navigate('Register')
+                    <Text style={styles.textSubTitle2} onPress={() =>
+                        this.props.navigation.navigate('Login')
                     }>
-                        New user? Register Now
+                        Already have an Account? 
+                        Login Now!
                     </Text>
                 </View>
             </Container>
@@ -138,7 +155,7 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default Register;
 
 const styles = StyleSheet.create({
     container: {
@@ -160,6 +177,13 @@ const styles = StyleSheet.create({
         color: '#f5f6fa',
     },
     textSubTitle: {
+        color: '#f5f6fa',
+        fontSize: 15,
+        marginBottom: '5%',
+        textAlign: 'center',
+        fontWeight: 'bold',
+    },
+    textSubTitle2: {
         color: '#f5f6fa',
         fontSize: 15,
         marginTop: '5%',

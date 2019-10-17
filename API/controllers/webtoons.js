@@ -1,27 +1,26 @@
-const jwt = require('jsonwebtoken');
 const models = require('../models');
 const Sequelize = require('sequelize');
 const Webtoon = models.webtoons;
 const Op = Sequelize.Op;
 
 exports.index = (req, res) => {
+  let favorite = req.query.is_favorite;
+  let title = req.query.title;
+  if (favorite === 'true') {
+    favorite = 1;
+    Webtoon.findAll({
+      where: {
+        isFavorite: favorite,
+      },
+    }).then(webtoons => res.send(webtoons));
+  } else if (title != null) {
+    Webtoon.findAll({
+      where: {
+        title: { [Op.like]: title + '%' },
+      },
+    }).then(webtoons => res.send(webtoons));
+  }
   Webtoon.findAll().then(webtoons => res.send(webtoons));
-};
-
-exports.show = (req, res) => {
-  Webtoon.findAll({
-    where: {
-      title: { [Op.like]: req.params.title + '%' },
-    },
-  }).then(webtoons => res.send(webtoons));
-};
-
-exports.showFav = (req, res) => {
-  Webtoon.findAll({
-    where: {
-      isFavorite: req.params.favorite,
-    },
-  }).then(webtoons => res.send(webtoons));
 };
 
 exports.showWebtoon = (req, res) => {
@@ -33,29 +32,58 @@ exports.showWebtoon = (req, res) => {
 };
 
 exports.storeWebtoon = (req, res) => {
-  Webtoon.create(req.body).then(webtoon => {
+  const userId = req.params.id;
+  const { title, genre, isFavorite, image } = req.body;
+  Webtoon.create({
+    title: title,
+    genre: genre,
+    isFavorite: isFavorite,
+    image: image,
+    createdBy: userId,
+  }).then(data => {
     res.send({
-      message: 'success',
-      webtoon,
+      success: true,
+      id: data.id,
+      title: data.title,
+      genre: data.genre,
+      isFavorite: data.isFavorite,
+      image: data.image,
+      createdBy: data.createdBy,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
     });
   });
 };
 
 exports.updateWebtoon = (req, res) => {
-  Webtoon.update(req.body, { where: { id: req.params.id } }).then(webtoon => {
+  const webtoonId = req.params.webtoonId;
+  const userId = req.params.userId;
+  Webtoon.update(req.body, {
+    where: { id: webtoonId, createdBy: userId },
+  }).then(webtoon => {
     res.send({
-      message: 'success',
-      webtoon,
+      success: true,
+      id: req.body.id,
+      title: req.body.title,
+      genre: req.body.genre,
+      isFavorite: req.body.isFavorite,
+      image: req.body.image,
+      createdBy: req.body.createdBy,
+      createdAt: req.body.createdAt,
+      updatedAt: req.body.updatedAt,
     });
   });
 };
 
 exports.deleteWebtoon = (req, res) => {
-  const id_webtoon = req.params.id;
-  Webtoon.destroy({ where: { id: id_webtoon } }).then(webtoon => {
-    res.send({
-      message: 'success',
-      id: id_webtoon,
-    });
-  });
+  const webtoonId = req.params.webtoonId;
+  const userId = req.params.userId;
+  Webtoon.destroy({ where: { id: webtoonId, createdBy: userId } }).then(
+    webtoon => {
+      res.send({
+        message: 'success',
+        id: webtoonId,
+      });
+    },
+  );
 };

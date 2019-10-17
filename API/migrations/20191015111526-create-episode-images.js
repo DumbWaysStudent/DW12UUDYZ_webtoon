@@ -22,11 +22,31 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      id_episode: {
+      episodeId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'episodes',
+          key: 'id',
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
+      },
+      webtoonId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'webtoons',
+          key: 'id',
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
+      },
+      createdBy: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
           key: 'id',
         },
         onUpdate: 'cascade',

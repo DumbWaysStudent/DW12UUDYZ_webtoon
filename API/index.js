@@ -34,74 +34,71 @@ app.group('/api/v1', router => {
   router.delete('/user/:id', authenticated, UsersController.delete);
 
   //API Webtoons
-  router.get('/webtoons', WebtoonsController.index);
-  router.get('/webtoons/title=:title', WebtoonsController.show);
-  router.get(
-    '/webtoons/isFavorite=:favorite',
-    authenticated,
-    WebtoonsController.showFav,
-  );
+  router.get('/webtoons', WebtoonsController.index); //15
   router.get(
     '/user/:id/webtoons',
     authenticated,
     WebtoonsController.showWebtoon,
-  );
+  ); //20
   router.post(
     '/user/:id/webtoon',
     authenticated,
     WebtoonsController.storeWebtoon,
-  );
+  ); //21
   router.put(
-    '/user/webtoon/:id',
+    '/user/:userId/webtoon/:webtoonId',
     authenticated,
     WebtoonsController.updateWebtoon,
-  );
+  ); //22
   router.delete(
-    '/user/webtoon/:id',
+    '/user/:userId/webtoon/:webtoonId',
     authenticated,
     WebtoonsController.deleteWebtoon,
-  );
+  ); //23
 
   //API Episodes
-  router.get('/webtoon/:id_webtoon/episodes', EpisodesController.index);
+  router.get('/webtoon/:webtoonId/episodes', EpisodesController.index); //16
   router.get(
-    '/user/webtoon/:id_webtoon/episodes',
+    '/user/:userId/webtoon/:webtoonId/episodes',
     authenticated,
     EpisodesController.showEpisodes,
   );
   router.post(
-    '/user/webtoon/:id_webtoon/episode',
+    '/user/:userId/webtoon/:webtoonId/episode',
     authenticated,
     EpisodesController.storeEpisodes,
-  );
+  ); //24
   router.put(
-    '/user/webtoon/episode/:id_episode',
+    '/user/:userId/webtoon/:webtoonId/episode/:episodeId',
     authenticated,
     EpisodesController.updateEpisode,
-  );
+  ); //25
   router.delete(
-    '/user/webtoon/episode/:id_episode',
+    '/user/:userId/webtoon/:webtoonId/episode/:episodeId',
     authenticated,
     EpisodesController.deleteEpisode,
-  );
+  ); //26
 
   //API EpisodesImages
-  router.get('/webtoon/episode/:id_episode', EpisodeImagesController.index);
   router.get(
-    '/user/webtoon/episode/:id_episode/images',
+    '/webtoon/:webtoonId/episode/:episodeId',
+    EpisodeImagesController.index,
+  ); //17
+  router.get(
+    '/user/:userId/webtoon/:webtoonId/episode/:episodeId/images',
     authenticated,
     EpisodeImagesController.index,
-  );
+  ); //25
   router.post(
-    '/user/webtoon/episode/:id_episode/image',
+    '/user/:userId/webtoon/:webtoonId/episode/:episodeId/image',
     authenticated,
     EpisodeImagesController.storeEpisodeImages,
-  );
+  ); //27
   router.delete(
-    '/user/webtoon/episode/image/:id_image',
+    '/user/:userId/webtoon/:webtoonId/episode/:episodeId/image/:imageId',
     authenticated,
     EpisodeImagesController.deleteEpisodeImage,
-  );
+  ); //28
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));

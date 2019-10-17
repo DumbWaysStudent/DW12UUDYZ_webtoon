@@ -2,30 +2,60 @@ const models = require('../models');
 const EpisodeImage = models.episode_images;
 
 exports.index = (req, res) => {
+  const webtoonId = req.params.webtoonId;
+  const episodeId = req.params.episodeId;
+  const createdBy = req.params.userId;
   EpisodeImage.findAll({
     where: {
-      id_episode: req.params.id_episode,
+      webtoonId: webtoonId,
+      episodeId: episodeId,
+      createdBy: createdBy,
     },
   }).then(result => res.send(result));
 };
 
 exports.storeEpisodeImages = (req, res) => {
-  EpisodeImage.create(req.body, {
-    where: { id_episode: req.params.id_episode },
-  }).then(episodeImages => {
+  const webtoonId = req.params.webtoonId;
+  const episodeId = req.params.episodeId;
+  const createdBy = req.params.userId;
+  const { page, image } = req.body;
+  EpisodeImage.create({
+    page: page,
+    image: image,
+    episodeId: episodeId,
+    createdBy: createdBy,
+    webtoonId: webtoonId,
+  }).then(data => {
     res.send({
-      message: 'success',
-      episodeImages,
+      success: true,
+      id: data.id,
+      page: data.page,
+      image: data.image,
+      createdBy: data.createdBy,
+      webtoonId: data.webtoonId,
+      episodeId: data.episodeId,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
     });
   });
 };
 
 exports.deleteEpisodeImage = (req, res) => {
-  const id_image = req.params.id_image;
-  EpisodeImage.destroy({ where: { id: id_image } }).then(episodeImages => {
+  const imageId = req.params.imageId;
+  const webtoonId = req.params.webtoonId;
+  const episodeId = req.params.episodeId;
+  const createdBy = req.params.userId;
+  EpisodeImage.destroy({
+    where: {
+      id: imageId,
+      createdBy: createdBy,
+      webtoonId: webtoonId,
+      episodeId: episodeId,
+    },
+  }).then(episodeImages => {
     res.send({
       message: 'success',
-      id: id_image,
+      id: imageId,
     });
   });
 };

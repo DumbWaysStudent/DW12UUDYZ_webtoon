@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { Share, Alert } from 'react-native';
 import { Icon } from 'native-base';
 import Login from './src/screens/Login';
+import Register from './src/screens/Register';
 import ForYou from './src/screens/ForYou';
 import DetailWebToon from './src/screens/DetailWebToon';
 import DetailEpisode from './src/screens/DetailEpisode';
@@ -33,6 +34,26 @@ const onShare = async () => {
 };
 
 const AuthStack = createStackNavigator({
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      title: 'Login',
+      header: null,
+      cardStack: {
+        gesturesEnabled: false,
+      },
+    },
+  },
+  Register: {
+    screen: Register,
+    navigationOptions: {
+      title: 'Register',
+      header: null,
+      cardStack: {
+        gesturesEnabled: false,
+      },
+    },
+  },
   ForYou: {
     screen: ForYou,
     navigationOptions: {
