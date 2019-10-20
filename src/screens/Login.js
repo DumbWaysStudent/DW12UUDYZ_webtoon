@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
 import { StyleSheet, Image, Alert } from 'react-native';
@@ -10,10 +11,12 @@ import {
     Input,
     Label,
     Button,
+    Toast,
 } from 'native-base';
 import axios from 'axios';
 import deviceStorage from '../services/deviceStorage';
 import { AsyncStorage } from 'react-native';
+import {API_URL} from '../constant/api_url';
 
 class Login extends Component {
     constructor(props) {
@@ -24,8 +27,7 @@ class Login extends Component {
             isValidEmail: true,
             emailValue: '',
             passwordValue: '',
-            userEmail: 'aku@gmail.com',
-            userPassword: 'kamu',
+            showToast: false,
         };
     }
 
@@ -58,17 +60,27 @@ class Login extends Component {
     {
         const { emailValue, passwordValue } = this.state;
 
-        axios.post('http://192.168.137.1:5000/api/v1/login', {
+        axios.post(`${API_URL}/login`, {
             email: emailValue,
             password: passwordValue,
         }).then((response) => {
             console.log(response);
-            deviceStorage.saveItem('id_token', response.data.token);
-            AsyncStorage.getItem('id_token', (_err, result) =>
-            {
-                console.log(result);
-                this.props.navigation.navigate('ForYou');
-            });
+            if (response.data.success === true){
+                deviceStorage.saveItem('id_token', response.data.token);
+                deviceStorage.saveItem('userId', response.data.userId);
+                AsyncStorage.getItem('id_token', (_err, result) =>
+                {
+                    console.log(result);
+                    this.props.navigation.navigate('ForYou');
+                });
+            } else {
+                Alert.alert('Incorrect', 'Email or Password is Incorrect');
+                // Toast.show({
+                //     text: 'Wrong password!',
+                //     buttonText: 'Okay',
+                //     type: 'danger',
+                // });
+            }
         }).catch((error) => {
         });
     };
@@ -85,7 +97,7 @@ class Login extends Component {
                         source={{ uri: 'https://i.ibb.co/SRX5RMn/comic-boom-explosion-2-1.png' }}
                     />
                     <Text style={styles.textSubTitle}>
-                        Already have an Account? 
+                        Already have an Account?
                         Login Now!
                     </Text>
                     <Item floatingLabel style={[styles.itemInput, !this.state.isValidEmail ? styles.textInputError : null]}>
@@ -111,6 +123,7 @@ class Login extends Component {
                             value={this.state.passwordValue}
                         />
                         <Icon
+                            // eslint-disable-next-line react-native/no-inline-styles
                             style={{ color:'#f5f6fa'}}
                             active name={!this.state.isShowPassword ? 'eye-off' : 'eye'}
                             onPress={() => {
@@ -127,7 +140,7 @@ class Login extends Component {
                     >
                         <Text style={styles.textButton}>Log In</Text>
                     </Button>
-                    <Text style={styles.textSubTitle} onPress={() =>
+                    <Text style={styles.textSubTitle2} onPress={() =>
                         this.props.navigation.navigate('Register')
                     }>
                         New user? Register Now
@@ -160,6 +173,14 @@ const styles = StyleSheet.create({
         color: '#f5f6fa',
     },
     textSubTitle: {
+        color: '#f5f6fa',
+        fontSize: 15,
+        marginTop: '5%',
+        marginBottom: '10%',
+        textAlign: 'center',
+        fontWeight: 'bold',
+    },
+    textSubTitle2: {
         color: '#f5f6fa',
         fontSize: 15,
         marginTop: '5%',

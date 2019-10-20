@@ -18,6 +18,8 @@ import {
   Input,
   Button,
 } from 'native-base';
+import { API_URL } from '../constant/api_url';
+import axios from 'axios';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
@@ -32,41 +34,22 @@ class ForYou extends Component {
     this.state = {
       position: 1,
       interval: null,
-      banners: [
-        {
-          title: 'The Secret ....',
-          url:
-            'https://swebtoon-phinf.pstatic.net/20190111_246/1547145672832qC9wR_JPEG/10_EC8DB8EB84A4EC9DBC_ipad.jpg',
-        },
-        {
-          title: 'Pasutri Gaje',
-          url:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfxPFjUCBTEVAwdDegTAKb5n05StXMUBjNJKZ4C8fJNQUqGdxB',
-        },
-        {
-          title: 'Young Kids',
-          url:
-            'https://swebtoon-phinf.pstatic.net/20190702_222/1562021366038KBkoL_JPEG/10_EC8DB8EB84A4EC9DBC_ipad.jpg',
-        },
-        {
-          title: 'Young Boys',
-          url:
-            'https://swebtoon-phinf.pstatic.net/20181026_50/1540502090211TQ4tw_JPEG/10_EC8DB8EB84A4EC9DBC_ipad+28329.jpg',
-        },
-        {
-          title: 'Old School',
-          url:
-            'https://mmc.tirto.id/image/otf/500x0/2019/07/02/webtoon-flawless--web_ratio-16x9.jpg',
-        },
-      ],
+      webtoons: [],
     };
+  }
+  componentDidMount() {
+    axios.get(`${API_URL}/webtoons`).then(res => {
+      const webtoons = res.data;
+      console.log(webtoons);
+      this.setState({ webtoons });
+    });
   }
   componentWillMount() {
     this.setState({
       interval: setInterval(() => {
         this.setState({
           position:
-            this.state.position === this.state.banners.length
+            this.state.position === this.state.webtoons.length
               ? 0
               : this.state.position + 1,
         });
@@ -93,7 +76,7 @@ class ForYou extends Component {
               <Item style={styles.itemMarginBottom}>
                 <Slideshow
                   containerStyle={styles.itemSliderImage}
-                  dataSource={this.state.banners}
+                  dataSource={this.state.webtoons}
                   position={this.state.position}
                   indicatorSelectedColor="#3BAD87"
                   indicatorColor="#f0edf6"
@@ -115,7 +98,7 @@ class ForYou extends Component {
                     <FlatList
                       horizontal
                       showsHorizontalScrollIndicator={false}
-                      data={this.state.banners}
+                      data={this.state.webtoons}
                       renderItem={({ item }) => (
                         <View style={styles.favItem}>
                           <TouchableOpacity
@@ -133,7 +116,7 @@ class ForYou extends Component {
                                 borderColor: 'grey',
                                 borderRadius: 7,
                               }}
-                              source={{ uri: item.url }}
+                              source={{ uri: item.image }}
                             />
                             <Text style={styles.favoriteTitle}>
                               {item.title}
@@ -149,7 +132,7 @@ class ForYou extends Component {
                   <Label style={styles.textSubTitle}>All</Label>
                   <FlatList
                     showsVerticalScrollIndicator={false}
-                    data={this.state.banners}
+                    data={this.state.webtoons}
                     renderItem={({ item }) => (
                       <View style={styles.viewAddFav}>
                         <Image
@@ -160,7 +143,7 @@ class ForYou extends Component {
                             borderColor: 'grey',
                             borderRadius: 7,
                           }}
-                          source={{ uri: item.url }}
+                          source={{ uri: item.image }}
                         />
                         <View style={styles.viewListItem}>
                           <Text>{item.title}</Text>
