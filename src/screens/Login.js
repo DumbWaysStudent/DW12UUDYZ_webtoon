@@ -11,12 +11,12 @@ import {
     Input,
     Label,
     Button,
-    Toast,
 } from 'native-base';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import deviceStorage from '../services/deviceStorage';
 import { AsyncStorage } from 'react-native';
-import {API_URL} from '../constant/api_url';
+import * as actionAccounts from './../redux/actions/actionAccounts';
+
 
 class Login extends Component {
     constructor(props) {
@@ -48,41 +48,23 @@ class Login extends Component {
     onShowPassword = () => {
         if (this.state.passwordValue !== '') {
             !this.state.isShowPassword ? this.setState({ isShowPassword: true }) : this.setState({ isShowPassword: false });
-            if ((this.state.emailValue = this.state.userEmail) && (this.state.passwordValue === this.state.userPassword)) {
-                this.setState({ isValidLogin: true });
-            } else {
-                this.setState({ isValidLogin: false });
-            }
         }
     };
 
-    loginUser = () =>
-    {
+    loginUser = async() => {
         const { emailValue, passwordValue } = this.state;
-
-        axios.post(`${API_URL}/login`, {
-            email: emailValue,
-            password: passwordValue,
-        }).then((response) => {
-            console.log(response);
-            if (response.data.success === true){
-                deviceStorage.saveItem('id_token', response.data.token);
-                deviceStorage.saveItem('userId', response.data.userId);
-                AsyncStorage.getItem('id_token', (_err, result) =>
-                {
-                    console.log(result);
-                    this.props.navigation.navigate('ForYou');
-                });
-            } else {
-                Alert.alert('Incorrect', 'Email or Password is Incorrect');
-                // Toast.show({
-                //     text: 'Wrong password!',
-                //     buttonText: 'Okay',
-                //     type: 'danger',
-                // });
-            }
-        }).catch((error) => {
-        });
+        await this.props.handleLogin(emailValue, passwordValue);
+        if (this.props.loginLocal.login.success === true){
+            deviceStorage.saveItem('id_token', this.props.loginLocal.login.token);
+            deviceStorage.saveItem('userId', this.props.loginLocal.login.userId);
+            AsyncStorage.getItem('id_token', (_err, result) =>
+            {
+                console.log(result);
+                this.props.navigation.navigate('ForYou');
+            });
+        } else {
+            Alert.alert('Incorrect', 'Email or Password is Incorrect');
+        }
     };
 
     render() {
@@ -151,8 +133,6 @@ class Login extends Component {
     }
 }
 
-export default Login;
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -207,3 +187,20 @@ const styles = StyleSheet.create({
         borderColor: 'red',
     },
 });
+
+const mapStateToProps = state => {
+    return {
+        loginLocal: state.login,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        handleLogin: (email, password) => dispatch(actionAccounts.handleLogin(email, password)),
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Login);

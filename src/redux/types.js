@@ -1,0 +1,6 @@
+//ACTION WEBTOONS
+export const GET_WEBTOONS = 'GET_WEBTOONS';
+export const GET_FAVOURITES = 'GET_FAVOURITES';
+
+//ACTION ACCOUNT
+export const LOGIN = 'LOGIN';

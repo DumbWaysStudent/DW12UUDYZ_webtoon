@@ -56,7 +56,7 @@ class EditProfile extends Component
         return (
             <View style={{ flex: 1 }}>
                 <Header style={styles.headerStyle}>
-                    <Left style={{ marginStart: 10 }}><Icon onPress={() => goBack()} name="arrow-back" style={{ color: 'white' }} /></Left><Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>Edit Profile</Text>
+                    <Left style={{ marginStart: 10 }}><Icon onPress={() => goBack()} name="arrow-back" style={{ color: 'white' }} /></Left><Text style={{ color: 'white', fontSize: 20, }}>Edit Profile</Text>
                     <Right style={{ marginEnd: 10 }}><Icon name="checkmark" style={{ color: 'white' }}
                         onPress={() =>
                         {

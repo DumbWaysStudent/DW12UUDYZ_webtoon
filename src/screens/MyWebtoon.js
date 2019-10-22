@@ -93,7 +93,7 @@ class MyWebtoon extends Component {
                     </View>
                   </View>
                 )}
-                keyExtractor={item => item}
+                keyExtractor={item => item.title}
               />
             </View>
           </View>

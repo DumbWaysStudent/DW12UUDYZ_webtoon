@@ -2,44 +2,14 @@
 import React, { Component } from 'react';
 import { StyleSheet, FlatList, Image } from 'react-native';
 import { Container, Text, View, Icon, Content, Item, Input } from 'native-base';
+import { connect } from 'react-redux';
+import * as actionWebtoons from './../redux/actions/actionWebtoons';
 
 class Favourite extends Component {
   constructor(props) {
     super(props);
     this.state = {
       inputValue: '',
-      banners: [
-        {
-          title: 'The Secret ....',
-          url:
-            'https://swebtoon-phinf.pstatic.net/20190111_246/1547145672832qC9wR_JPEG/10_EC8DB8EB84A4EC9DBC_ipad.jpg',
-          sumFavorite: '180 Favorite',
-        },
-        {
-          title: 'Pasutri Gaje',
-          url:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfxPFjUCBTEVAwdDegTAKb5n05StXMUBjNJKZ4C8fJNQUqGdxB',
-          sumFavorite: '80 Favorite',
-        },
-        {
-          title: 'Young Kids',
-          url:
-            'https://swebtoon-phinf.pstatic.net/20190702_222/1562021366038KBkoL_JPEG/10_EC8DB8EB84A4EC9DBC_ipad.jpg',
-          sumFavorite: '13 Favorite',
-        },
-        {
-          title: 'Young Boys',
-          url:
-            'https://swebtoon-phinf.pstatic.net/20181026_50/1540502090211TQ4tw_JPEG/10_EC8DB8EB84A4EC9DBC_ipad+28329.jpg',
-          sumFavorite: '29 Favorite',
-        },
-        {
-          title: 'Old School',
-          url:
-            'https://mmc.tirto.id/image/otf/500x0/2019/07/02/webtoon-flawless--web_ratio-16x9.jpg',
-          sumFavorite: '80 Favorite',
-        },
-      ],
     };
   }
 
@@ -55,8 +25,13 @@ class Favourite extends Component {
     });
   }
 
+  componentDidMount() {
+    this.props.getWebtoonFavourites(this.props.loginLocal.login.id);
+  }
+
   render() {
-    console.disableYellowBox = true;
+    //console.log(this.props.favouritesLocal.favourites);
+    //console.disableYellowBox = true;
     return (
       <Container>
         <Content>
@@ -74,15 +49,15 @@ class Favourite extends Component {
               </Item>
               <FlatList
                 showsVerticalScrollIndicator={false}
-                data={this.state.banners.filter(item =>
-                  item.title.includes(this.state.inputValue),
+                data={this.props.favouritesLocal.favourites.filter(item =>
+                  item.WebtoonData.title.includes(this.state.inputValue),
                 )}
                 renderItem={({ item }) => (
                   <View style={styles.viewAddFav}>
                     <Image
                       onPress={() =>
                         this.props.navigation.navigate('DetailEpisode', {
-                          itemTitle: item.title,
+                          itemTitle: item.WebtoonData.title,
                         })
                       }
                       style={{
@@ -92,30 +67,30 @@ class Favourite extends Component {
                         borderColor: 'grey',
                         borderRadius: 7,
                       }}
-                      source={{ uri: item.url }}
+                      source={{ uri: item.WebtoonData.image }}
                     />
                     <View style={styles.viewListItem}>
                       <Text
                         onPress={() =>
                           this.props.navigation.navigate('DetailEpisode', {
-                            itemTitle: item.title,
+                            itemTitle: item.WebtoonData.title,
                           })
                         }>
-                        {item.title}
+                        {item.WebtoonData.title}
                       </Text>
                       <Text
-                        style={{ fontSize: 13, fontColor: 'grey' }}
+                        style={{ fontSize: 13 }}
                         onPress={() =>
                           this.props.navigation.navigate('DetailEpisode', {
-                            itemTitle: item.title,
+                            itemTitle: item.WebtoonData.title,
                           })
                         }>
-                        {item.sumFavorite}
+                        Genre: {item.WebtoonData.genre}
                       </Text>
                     </View>
                   </View>
                 )}
-                keyExtractor={item => item}
+                keyExtractor={item => item.WebtoonData.id}
               />
             </View>
           </View>
@@ -127,22 +102,19 @@ class Favourite extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f1f2f6',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
   },
   viewContent: {
-    marginStart: 13,
-    marginEnd: 10,
+    width: '100%',
     alignItems: 'center',
-    borderRadius: 15,
-    width: '95%',
   },
   viewColor: {
+    width: '95%',
     backgroundColor: '#ffffff',
     alignItems: 'center',
   },
   inputText: {
-    width: '100%',
     marginTop: 20,
     marginBottom: 10,
     borderRadius: 15,
@@ -185,4 +157,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Favourite;
+const mapStateToProps = state => {
+  return {
+    favouritesLocal: state.favourites,
+    loginLocal: state.login,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getWebtoonFavourites: id =>
+      dispatch(actionWebtoons.handleGetWebtoonFavourites(id)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Favourite);

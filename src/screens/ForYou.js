@@ -18,15 +18,9 @@ import {
   Input,
   Button,
 } from 'native-base';
-import { API_URL } from '../constant/api_url';
-import axios from 'axios';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Slideshow from 'react-native-image-slider-show';
-import Favourite from './Favourite';
-import Profile from './Profile';
-import EditProfile from './EditProfile';
+import { connect } from 'react-redux';
+import * as actionWebtoons from './../redux/actions/actionWebtoons';
 
 class ForYou extends Component {
   constructor(props) {
@@ -34,29 +28,25 @@ class ForYou extends Component {
     this.state = {
       position: 1,
       interval: null,
-      webtoons: [],
     };
   }
   componentDidMount() {
-    axios.get(`${API_URL}/webtoons`).then(res => {
-      const webtoons = res.data;
-      console.log(webtoons);
-      this.setState({ webtoons });
-    });
+    this.props.getWebtoons();
+    this.props.getWebtoonFavourites(this.props.loginLocal.login.id);
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.setState({
       interval: setInterval(() => {
         this.setState({
           position:
-            this.state.position === this.state.webtoons.length
+            this.state.position === this.props.webtoonsLocal.webtoons.length
               ? 0
               : this.state.position + 1,
         });
       }, 2000),
     });
   }
-  componentWillUnmount() {
+  UNSAFE_componentWillUnmount() {
     clearInterval(this.state.interval);
   }
   render() {
@@ -68,24 +58,22 @@ class ForYou extends Component {
             <View style={styles.viewColor}>
               <Item
                 rounded
-                style={[styles.inputText, { width: '100%', marginTop: 20 }]}
+                style={[styles.inputText, { marginTop: 20 }]}
                 regular>
                 <Input placeholder="Pencarian" />
                 <Icon active name="search" />
               </Item>
-              <Item style={styles.itemMarginBottom}>
-                <Slideshow
-                  containerStyle={styles.itemSliderImage}
-                  dataSource={this.state.webtoons}
-                  position={this.state.position}
-                  indicatorSelectedColor="#3BAD87"
-                  indicatorColor="#f0edf6"
-                  titleStye={styles.textSlideShow}
-                  onPositionChanged={position => this.setState({ position })}
-                />
-              </Item>
             </View>
-
+            <Item style={styles.itemMarginBottom}>
+              <Slideshow
+                dataSource={this.props.webtoonsLocal.webtoons}
+                position={this.state.position}
+                indicatorSelectedColor="#3BAD87"
+                indicatorColor="#f0edf6"
+                titleStye={styles.textSlideShow}
+                onPositionChanged={position => this.setState({ position })}
+              />
+            </Item>
             <Item style={[styles.inputText, styles.itemMarginBottomInput]}>
               <SafeAreaView>
                 <View>
@@ -98,13 +86,13 @@ class ForYou extends Component {
                     <FlatList
                       horizontal
                       showsHorizontalScrollIndicator={false}
-                      data={this.state.webtoons}
-                      renderItem={({ item }) => (
+                      data={this.props.favouritesLocal.favourites}
+                      renderItem={({ item, index }) => (
                         <View style={styles.favItem}>
                           <TouchableOpacity
                             onPress={() =>
                               this.props.navigation.navigate('DetailWebToon', {
-                                otherTitle: item.title,
+                                otherTitle: item.WebtoonData.title,
                               })
                             }>
                             <Image
@@ -116,51 +104,83 @@ class ForYou extends Component {
                                 borderColor: 'grey',
                                 borderRadius: 7,
                               }}
-                              source={{ uri: item.image }}
+                              source={{ uri: item.WebtoonData.image }}
                             />
                             <Text style={styles.favoriteTitle}>
-                              {item.title}
+                              {item.WebtoonData.title}
                             </Text>
                           </TouchableOpacity>
                         </View>
                       )}
-                      keyExtractor={item => item}
+                      keyExtractor={item => item.WebtoonData.title}
                     />
                   </View>
                 </View>
-                <View>
+                <View style={{ marginBottom: 5 }}>
                   <Label style={styles.textSubTitle}>All</Label>
                   <FlatList
                     showsVerticalScrollIndicator={false}
-                    data={this.state.webtoons}
-                    renderItem={({ item }) => (
+                    data={this.props.webtoonsLocal.webtoons}
+                    renderItem={({ item, index }) => (
                       <View style={styles.viewAddFav}>
-                        <Image
-                          style={{
-                            width: 80,
-                            height: 80,
-                            borderWidth: 1,
-                            borderColor: 'grey',
-                            borderRadius: 7,
-                          }}
-                          source={{ uri: item.image }}
-                        />
+                        <TouchableOpacity
+                          onPress={() =>
+                            this.props.navigation.navigate('DetailWebToon', {
+                              otherTitle: item.title,
+                            })
+                          }>
+                          <Image
+                            style={{
+                              width: 80,
+                              height: 80,
+                              borderWidth: 1,
+                              borderColor: 'grey',
+                              borderRadius: 7,
+                            }}
+                            source={{ uri: item.image }}
+                          />
+                        </TouchableOpacity>
                         <View style={styles.viewListItem}>
-                          <Text>{item.title}</Text>
-                          <Button
-                            success
-                            style={styles.btnFavorite}
+                          <TouchableOpacity
                             onPress={() =>
                               this.props.navigation.navigate('DetailWebToon', {
                                 otherTitle: item.title,
                               })
                             }>
-                            <Text>+ Favorite</Text>
-                          </Button>
+                            <Text>{item.title}</Text>
+                            <Text
+                              style={{
+                                fontSize: 14,
+                                marginBottom: 3,
+                                fontColor: 'grey',
+                              }}>
+                              Genre: {item.genre}
+                            </Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() =>
+                              this.props.navigation.navigate('DetailWebToon', {
+                                otherTitle: item.title,
+                              })
+                            }>
+                            <Button
+                              success
+                              style={styles.btnFavorite}
+                              onPress={() =>
+                                this.props.navigation.navigate(
+                                  'DetailWebToon',
+                                  {
+                                    otherTitle: item.title,
+                                  },
+                                )
+                              }>
+                              <Text style={{ fontSize: 10 }}>+ Favorite</Text>
+                            </Button>
+                          </TouchableOpacity>
                         </View>
                       </View>
                     )}
-                    keyExtractor={item => item}
+                    keyExtractor={item => item.title}
                   />
                 </View>
               </SafeAreaView>
@@ -178,37 +198,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   viewContent: {
-    marginStart: 10,
-    width: '95%',
+    width: '100%',
     alignItems: 'center',
-    borderRadius: 15,
   },
   viewColor: {
-    width: '100%',
+    width: '95%',
     backgroundColor: '#ffffff',
     alignItems: 'center',
   },
   inputText: {
-    width: '100%',
     marginTop: 10,
     marginBottom: 20,
     borderRadius: 15,
-  },
-  itemSliderImage: {
-    width: '100%',
-    borderRadius: 7,
   },
   itemMarginBottom: {
     marginBottom: 10,
   },
   itemMarginBottomInput: {
     marginBottom: 20,
+    width: '100%',
   },
   favoriteTitle: {
     textAlign: 'center',
   },
   textSubTitle: {
-    fontSize: 18,
+    marginStart: 8,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   textSlideShow: {
@@ -218,8 +233,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   favItem: {
-    marginStart: 20,
-    marginHorizontal: 10,
     marginVertical: 5,
     borderRadius: 15,
   },
@@ -237,79 +250,28 @@ const styles = StyleSheet.create({
   },
   btnFavorite: {
     height: 20,
-    width: 100,
+    width: 90,
     textAlign: 'center',
   },
 });
 
-const stack = createStackNavigator({
-  Profile: {
-    screen: Profile,
-    navigationOptions: {
-      header: null,
-    },
-  },
-  EditProfile: {
-    screen: EditProfile,
-    navigationOptions: {
-      header: null,
-    },
-  },
-});
+const mapStateToProps = state => {
+  return {
+    webtoonsLocal: state.webtoons,
+    favouritesLocal: state.favourites,
+    loginLocal: state.login,
+  };
+};
 
-const TabNavigator = createMaterialBottomTabNavigator(
-  {
-    ForYou: {
-      screen: ForYou,
-      navigationOptions: {
-        tabBarLabel: 'For You',
-        tabBarIcon: ({ tintColor }) => (
-          <View>
-            <Icon style={[{ color: tintColor }]} size={25} name={'apps'} />
-          </View>
-        ),
-      },
-    },
-    Favourite: {
-      screen: Favourite,
-      navigationOptions: {
-        tabBarLabel: 'Favourite',
-        tabBarIcon: ({ tintColor }) => (
-          <View>
-            <Icon style={[{ color: tintColor }]} size={25} name={'star'} />
-          </View>
-        ),
-        activeColor: '#f0edf6',
-        inactiveColor: '#226557',
-        barStyle: { backgroundColor: '#3BAD87' },
-      },
-    },
-    Profile: {
-      screen: stack,
-      navigationOptions: {
-        headerLeft: null,
-        headerRight: (
-          // eslint-disable-next-line react-native/no-inline-styles
-          <Icon style={{ color: 'white' }} name="create" />
-        ),
-        tabBarLabel: 'Profile',
-        tabBarIcon: ({ tintColor }) => (
-          <View>
-            <Icon style={[{ color: tintColor }]} size={25} name={'person'} />
-          </View>
-        ),
-        activeColor: '#f0edf6',
-        inactiveColor: '#226557',
-        barStyle: { backgroundColor: '#3BAD87' },
-      },
-    },
-  },
-  {
-    initialRouteName: 'ForYou',
-    activeColor: '#f0edf6',
-    inactiveColor: '#226557',
-    barStyle: { backgroundColor: '#3BAD87' },
-  },
-);
+const mapDispatchToProps = dispatch => {
+  return {
+    getWebtoons: () => dispatch(actionWebtoons.handleGetWebtoons()),
+    getWebtoonFavourites: id =>
+      dispatch(actionWebtoons.handleGetWebtoonFavourites(id)),
+  };
+};
 
-export default createAppContainer(TabNavigator);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ForYou);

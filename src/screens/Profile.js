@@ -27,7 +27,7 @@ class Profile extends Component {
         return (
             <View style={styles.viewContent}>
                 <Header style={styles.headerStyle}>
-                    <Left style={{ marginStart: 10 }}><Text style={{color:'white', fontSize: 25, fontWeight:'bold'}}>Profile</Text></Left>
+                    <Left style={{ marginStart: 10 }}><Text style={{color:'white', fontSize: 20}}>Profile</Text></Left>
                     <Right style={{ marginEnd: 10 }}><Icon name="create" style={{ color: 'white' }} 
                         onPress={() => {
                             this.props.navigation.navigate('EditProfile', {
