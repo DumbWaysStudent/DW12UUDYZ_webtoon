@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, FlatList, Image } from 'react-native';
+import { StyleSheet, FlatList, Image, Text } from 'react-native';
 import { Container, View, Content } from 'native-base';
+import { connect } from 'react-redux';
+import * as actionWebtoons from './../redux/actions/actionWebtoons';
 
 class DetailEpisode extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -14,37 +16,16 @@ class DetailEpisode extends Component {
     this.state = {
       position: 1,
       interval: null,
-      banners: [
-        {
-          url:
-            'https://pm1.narvii.com/6516/33c1043bd66581e0306c86032611b7c69f9861cf_hq.jpg',
-        },
-        {
-          url:
-            'https://i.pinimg.com/originals/4c/6f/b9/4c6fb973437cc39b13197688a95c2362.png',
-        },
-        {
-          url:
-            'https://i.pinimg.com/originals/aa/45/4c/aa454ca6f22cf4c75d965ed4f36dcc5c.png',
-        },
-        {
-          url:
-            'https://scontent-lga3-1.cdninstagram.com/vp/ec0f2974758e822f5d982809440f0d00/5DB7E267/t51.2885-15/e35/34863244_2019620481622929_9059925939713998848_n.jpg?_nc_ht=scontent-lga3-1.cdninstagram.com&ig_cache_key=MTgwOTEyNTAxNzIzNTkzNTE2Mg%3D%3D.2',
-        },
-        {
-          url: 'https://pbs.twimg.com/media/D-MIGS6U4AEjALU.jpg',
-        },
-        {
-          url:
-            'https://www.anime-planet.com/images/manga/covers/sweet-home-23975.jpg?t=1516403924',
-        },
-        {
-          url:
-            'https://66.media.tumblr.com/b3d9535aca236e23efb6349458270016/tumblr_p6gki04CX11r4xqamo3_r1_500.jpg',
-        },
-      ],
     };
   }
+
+  async componentDidMount() {
+    const { navigation } = this.props;
+    const webtoonId = navigation.getParam('webtoonId', 'No-ID');
+    const episodeId = navigation.getParam('episodeId', 'No-ID');
+    await this.props.getWebtoonImages(webtoonId, episodeId);
+  }
+
   render() {
     console.disableYellowBox = true;
     return (
@@ -54,7 +35,7 @@ class DetailEpisode extends Component {
             <View style={styles.viewColor}>
               <FlatList
                 showsVerticalScrollIndicator={false}
-                data={this.state.banners}
+                data={this.props.imagesLocal.images}
                 renderItem={({ item }) => (
                   <View style={styles.viewAddFav}>
                     <Image
@@ -62,11 +43,11 @@ class DetailEpisode extends Component {
                         width: '100%',
                         height: 500,
                       }}
-                      source={{ uri: item.url }}
+                      source={{ uri: item.image }}
                     />
                   </View>
                 )}
-                keyExtractor={item => item}
+                keyExtractor={item => item.page}
               />
             </View>
           </View>
@@ -141,4 +122,20 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailEpisode;
+const mapStateToProps = state => {
+  return {
+    imagesLocal: state.images,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getWebtoonImages: (webtoonId, episodeId) =>
+      dispatch(actionWebtoons.handleGetWebtoonImages(webtoonId, episodeId)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(DetailEpisode);

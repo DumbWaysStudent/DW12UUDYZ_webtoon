@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
-import { StyleSheet, FlatList, Image, StatusBar } from 'react-native';
+import { StyleSheet, FlatList, Image, Alert } from 'react-native';
 import {
   Container,
   Text,
@@ -11,46 +11,66 @@ import {
   Item,
   Input,
 } from 'native-base';
+import { connect } from 'react-redux';
+import * as actionAccount from './../redux/actions/actionAccounts';
 
 class EditEpisode extends Component {
   constructor(props) {
     super(props);
     this.state = {
       inputValue: '',
-      banners: [
-        {
-          title: 'page1.png',
-          url:
-            'https://pm1.narvii.com/6516/33c1043bd66581e0306c86032611b7c69f9861cf_hq.jpg',
-          sumFavorite: '23 September 2019',
-        },
-        {
-          title: 'page2.png',
-          url:
-            'https://cf.shopee.co.id/file/2843f78cb557d57de7c7ab97e4344e9b_tn',
-          sumFavorite: '17 September 2019',
-        },
-      ],
     };
   }
 
+  async componentDidMount() {
+    const { navigation } = this.props;
+    const webtoonId = navigation.getParam('webtoonId', 'No-ID');
+    const episodeId = navigation.getParam('episodeId', 'No-ID');
+    console.log(webtoonId);
+    console.log(episodeId);
+    await this.props.getUserImages(
+      this.props.loginLocal.login.id,
+      webtoonId,
+      episodeId,
+      this.props.loginLocal.login.token,
+    );
+  }
+
+  handleDeleteEpisode = async () => {
+    const { navigation } = this.props;
+    const webtoonId = navigation.getParam('webtoonId', 'No-ID');
+    const episodeId = navigation.getParam('episodeId', 'No-ID');
+    console.log(webtoonId);
+    console.log(episodeId);
+    await this.props.deleteUserEpisode(
+      this.props.loginLocal.login.id,
+      webtoonId,
+      episodeId,
+      this.props.loginLocal.login.token,
+    );
+    if (this.props.deleteEpisodeLocal.deleteEpisode.message === 'success') {
+      Alert.alert('Waring', 'Delete image successfully');
+      this.props.navigation.navigate('MyWebtoon');
+    }
+  };
+
   render() {
     console.disableYellowBox = true;
+    const { navigation } = this.props;
+    const episodeTitle = navigation.getParam('itemTitle', 'No-ID');
     return (
       <Container>
         <Content>
           <View style={styles.viewContent}>
             <Label style={[styles.textSubTitle, { marginTop: 15 }]}>Name</Label>
             <Item style={styles.textInput}>
-              <Input />
+              <Input value={episodeTitle} />
             </Item>
             <Label style={styles.textSubTitle}>Add Image</Label>
             <View style={styles.viewColor}>
               <FlatList
                 showsVerticalScrollIndicator={false}
-                data={this.state.banners.filter(item =>
-                  item.title.includes(this.state.inputValue),
-                )}
+                data={this.props.userImagesLocal.userImages}
                 renderItem={({ item }) => (
                   <View style={styles.viewAddFav}>
                     <Image
@@ -61,20 +81,25 @@ class EditEpisode extends Component {
                         borderColor: 'grey',
                         borderRadius: 7,
                       }}
-                      source={{ uri: item.url }}
+                      source={{ uri: item.image }}
                     />
                     <View style={styles.viewListItem}>
-                      <Text>{item.title}</Text>
+                      <Text>{item.image}</Text>
                     </View>
                   </View>
                 )}
-                keyExtractor={item => item}
+                keyExtractor={item => item.id}
               />
               <View style={{ flexDirection: 'row' }}>
                 <Button style={styles.btnComponent} success>
                   <Text>+ Image</Text>
                 </Button>
-                <Button style={styles.btnComponentDelete} danger>
+                <Button
+                  style={styles.btnComponentDelete}
+                  danger
+                  onPress={() => {
+                    this.handleDeleteEpisode();
+                  }}>
                   <Text style={styles.txtBtn}>Delete Episode</Text>
                 </Button>
               </View>
@@ -171,4 +196,33 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EditEpisode;
+const mapStateToProps = state => {
+  return {
+    deleteEpisodeLocal: state.deleteEpisode,
+    loginLocal: state.login,
+    userImagesLocal: state.userImages,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getUserImages: (userId, webtoonId, episodeId, token) =>
+      dispatch(
+        actionAccount.handleGetUserImages(userId, webtoonId, episodeId, token),
+      ),
+    deleteUserEpisode: (userId, webtoonId, episodeId, token) =>
+      dispatch(
+        actionAccount.handleDeleteUserEpisode(
+          userId,
+          webtoonId,
+          episodeId,
+          token,
+        ),
+      ),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EditEpisode);

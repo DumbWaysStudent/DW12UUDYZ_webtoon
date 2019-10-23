@@ -12,45 +12,22 @@ import {
   Item,
   Input,
 } from 'native-base';
+import { connect } from 'react-redux';
+import * as actionAccount from './../redux/actions/actionAccounts';
 
 class CreateWebtoon extends Component {
   constructor(props) {
     super(props);
     this.state = {
       inputValue: '',
-      banners: [
-        {
-          title: 'Ep.4 - Last Game ',
-          url:
-            'https://awsimages.detik.net.id/community/media/visual/2018/02/06/9ccd0ab5-43c8-4ea0-876c-9b0763bd38d6_43.jpeg?w=780&q=90',
-          sumFavorite: '9 Oktober 2019',
-        },
-        {
-          title: 'Ep.3 - Kaburnya dari Rumah',
-          url:
-            'https://forums.tapas.io/uploads/default/original/3X/4/d/4dcd6b2abf71721199d507d6b28c73dc1e2a55e4.png',
-          sumFavorite: '3 Oktober 2019',
-        },
-        {
-          title: 'Ep.2 - Teringat Kerumah',
-          url:
-            'https://66.media.tumblr.com/d5cff69e37d4dc86ae33f3e9c6dd6970/tumblr_inline_pkorbg5I481szvfcc_540.jpg',
-          sumFavorite: '23 September 2019',
-        },
-        {
-          title: 'Ep.1 - Kembalinya Nyata',
-          url:
-            'https://cf.shopee.co.id/file/2843f78cb557d57de7c7ab97e4344e9b_tn',
-          sumFavorite: '17 September 2019',
-        },
-        {
-          title: 'Prolog',
-          url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
-          sumFavorite: '1 September 2019',
-        },
-      ],
     };
+  }
+
+  async componentDidMount() {
+    await this.props.getUserWebtoons(
+      this.props.loginLocal.login.id,
+      this.props.loginLocal.login.token,
+    );
   }
 
   render() {
@@ -185,4 +162,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateWebtoon;
+const mapStateToProps = state => {
+  return {
+    loginLocal: state.login,
+    userWebtoonsLocal: state.userWebtoons,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getUserEpisodes: (userId, webtoonId, token) =>
+      dispatch(actionAccount.handleGetUserEpisodes(userId, webtoonId, token)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CreateWebtoon);

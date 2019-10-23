@@ -11,11 +11,9 @@ import {
   Container,
   Text,
   View,
-  Icon,
   Content,
   Item,
   Label,
-  Input,
   Button,
 } from 'native-base';
 import Slideshow from 'react-native-image-slider-show';
@@ -30,9 +28,9 @@ class ForYou extends Component {
       interval: null,
     };
   }
-  componentDidMount() {
-    this.props.getWebtoons();
-    this.props.getWebtoonFavourites(this.props.loginLocal.login.id);
+  async componentDidMount() {
+    await this.props.getWebtoons();
+    await this.props.getWebtoonFavourites(this.props.loginLocal.login.id);
   }
   UNSAFE_componentWillMount() {
     this.setState({
@@ -54,16 +52,7 @@ class ForYou extends Component {
     return (
       <Container style={styles.container}>
         <Content>
-          <View style={styles.viewContent}>
-            <View style={styles.viewColor}>
-              <Item
-                rounded
-                style={[styles.inputText, { marginTop: 20 }]}
-                regular>
-                <Input placeholder="Pencarian" />
-                <Icon active name="search" />
-              </Item>
-            </View>
+          <View>
             <Item style={styles.itemMarginBottom}>
               <Slideshow
                 dataSource={this.props.webtoonsLocal.webtoons}
@@ -76,7 +65,7 @@ class ForYou extends Component {
             </Item>
             <Item style={[styles.inputText, styles.itemMarginBottomInput]}>
               <SafeAreaView>
-                <View>
+                <View style={{ marginStart: 10 }}>
                   <Label style={styles.textSubTitle}>Favourite</Label>
                   <View
                     style={[
@@ -93,6 +82,8 @@ class ForYou extends Component {
                             onPress={() =>
                               this.props.navigation.navigate('DetailWebToon', {
                                 otherTitle: item.WebtoonData.title,
+                                bannerImage: item.WebtoonData.image,
+                                webtoonId: item.WebtoonData.id,
                               })
                             }>
                             <Image
@@ -116,7 +107,7 @@ class ForYou extends Component {
                     />
                   </View>
                 </View>
-                <View style={{ marginBottom: 5 }}>
+                <View style={{ marginBottom: 5, marginStart: 10 }}>
                   <Label style={styles.textSubTitle}>All</Label>
                   <FlatList
                     showsVerticalScrollIndicator={false}
@@ -127,11 +118,13 @@ class ForYou extends Component {
                           onPress={() =>
                             this.props.navigation.navigate('DetailWebToon', {
                               otherTitle: item.title,
+                              bannerImage: item.image,
+                              webtoonId: item.id,
                             })
                           }>
                           <Image
                             style={{
-                              width: 80,
+                              width: 100,
                               height: 80,
                               borderWidth: 1,
                               borderColor: 'grey',
@@ -145,14 +138,15 @@ class ForYou extends Component {
                             onPress={() =>
                               this.props.navigation.navigate('DetailWebToon', {
                                 otherTitle: item.title,
+                                bannerImage: item.image,
+                                webtoonId: item.id,
                               })
                             }>
                             <Text>{item.title}</Text>
                             <Text
                               style={{
-                                fontSize: 14,
+                                fontSize: 12,
                                 marginBottom: 3,
-                                fontColor: 'grey',
                               }}>
                               Genre: {item.genre}
                             </Text>
@@ -161,6 +155,8 @@ class ForYou extends Component {
                             onPress={() =>
                               this.props.navigation.navigate('DetailWebToon', {
                                 otherTitle: item.title,
+                                bannerImage: item.image,
+                                webtoonId: item.id,
                               })
                             }>
                             <Button
@@ -171,6 +167,8 @@ class ForYou extends Component {
                                   'DetailWebToon',
                                   {
                                     otherTitle: item.title,
+                                    bannerImage: item.image,
+                                    webtoonId: item.id,
                                   },
                                 )
                               }>
@@ -198,11 +196,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   viewContent: {
-    width: '100%',
     alignItems: 'center',
   },
   viewColor: {
-    width: '95%',
     backgroundColor: '#ffffff',
     alignItems: 'center',
   },
@@ -216,7 +212,6 @@ const styles = StyleSheet.create({
   },
   itemMarginBottomInput: {
     marginBottom: 20,
-    width: '100%',
   },
   favoriteTitle: {
     textAlign: 'center',

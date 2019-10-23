@@ -2,45 +2,22 @@
 import React, { Component } from 'react';
 import { StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { Container, Text, View, Content } from 'native-base';
+import { connect } from 'react-redux';
+import * as actionWebtoons from './../redux/actions/actionAccounts';
 
 class MyWebtoon extends Component {
   constructor(props) {
     super(props);
     this.state = {
       inputValue: '',
-      banners: [
-        {
-          title: 'The Secret ....',
-          url:
-            'https://swebtoon-phinf.pstatic.net/20190111_246/1547145672832qC9wR_JPEG/10_EC8DB8EB84A4EC9DBC_ipad.jpg',
-          sumFavorite: '3 Episode(s)',
-        },
-        {
-          title: 'Pasutri Gaje',
-          url:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfxPFjUCBTEVAwdDegTAKb5n05StXMUBjNJKZ4C8fJNQUqGdxB',
-          sumFavorite: '3 Episode(s)',
-        },
-        {
-          title: 'Young Kids',
-          url:
-            'https://swebtoon-phinf.pstatic.net/20190702_222/1562021366038KBkoL_JPEG/10_EC8DB8EB84A4EC9DBC_ipad.jpg',
-          sumFavorite: '3 Episode(s)',
-        },
-        {
-          title: 'Young Boys',
-          url:
-            'https://swebtoon-phinf.pstatic.net/20181026_50/1540502090211TQ4tw_JPEG/10_EC8DB8EB84A4EC9DBC_ipad+28329.jpg',
-          sumFavorite: '3 Episode(s)',
-        },
-        {
-          title: 'Old School',
-          url:
-            'https://mmc.tirto.id/image/otf/500x0/2019/07/02/webtoon-flawless--web_ratio-16x9.jpg',
-          sumFavorite: '3 Episode(s)',
-        },
-      ],
     };
+  }
+
+  async componentDidMount() {
+    await this.props.getUserWebtoons(
+      this.props.loginLocal.login.id,
+      this.props.loginLocal.login.token,
+    );
   }
 
   render() {
@@ -52,48 +29,51 @@ class MyWebtoon extends Component {
             <View style={styles.viewColor}>
               <FlatList
                 showsVerticalScrollIndicator={false}
-                data={this.state.banners.filter(item =>
-                  item.title.includes(this.state.inputValue),
-                )}
+                data={this.props.userWebtoonsLocal.userWebtoons}
                 renderItem={({ item }) => (
                   <View style={styles.viewAddFav}>
-                    <Image
+                    <TouchableOpacity
                       onPress={() =>
                         this.props.navigation.navigate('EditMyWebtoon', {
                           itemTitle: item.title,
+                          webtoonId: item.id,
                         })
-                      }
-                      style={{
-                        width: 80,
-                        height: 80,
-                        borderWidth: 1,
-                        borderColor: 'grey',
-                        borderRadius: 7,
-                      }}
-                      source={{ uri: item.url }}
-                    />
+                      }>
+                      <Image
+                        style={{
+                          width: 80,
+                          height: 80,
+                          borderWidth: 1,
+                          borderColor: 'grey',
+                          borderRadius: 7,
+                        }}
+                        source={{ uri: item.image }}
+                      />
+                    </TouchableOpacity>
                     <View style={styles.viewListItem}>
-                      <Text
+                      <TouchableOpacity
                         onPress={() =>
                           this.props.navigation.navigate('EditMyWebtoon', {
                             itemTitle: item.title,
+                            webtoonId: item.id,
                           })
                         }>
-                        {item.title}
-                      </Text>
-                      <Text
-                        style={{ fontSize: 13, fontColor: 'grey' }}
-                        onPress={() =>
-                          this.props.navigation.navigate('EditMyWebtoon', {
-                            itemTitle: item.title,
-                          })
-                        }>
-                        {item.sumFavorite}
-                      </Text>
+                        <Text>{item.title}</Text>
+                        <Text
+                          style={{ fontSize: 13 }}
+                          onPress={() =>
+                            this.props.navigation.navigate('EditMyWebtoon', {
+                              itemTitle: item.title,
+                              webtoonId: item.id,
+                            })
+                          }>
+                          {item.sumFavorite}
+                        </Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 )}
-                keyExtractor={item => item.title}
+                keyExtractor={item => item.id}
               />
             </View>
           </View>
@@ -190,4 +170,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyWebtoon;
+const mapStateToProps = state => {
+  return {
+    loginLocal: state.login,
+    userWebtoonsLocal: state.userWebtoons,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getUserWebtoons: (userId, token) =>
+      dispatch(actionWebtoons.handleGetUserWebtoons(userId, token)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MyWebtoon);

@@ -1,7 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
-import { StyleSheet, FlatList, SafeAreaView, Image } from 'react-native';
+import {
+  StyleSheet,
+  FlatList,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import { Container, Text, View, Content, Item } from 'native-base';
+import { connect } from 'react-redux';
+import Moment from 'moment';
+import * as actionWebtoons from './../redux/actions/actionWebtoons';
 
 class DetailWebToon extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -10,64 +19,32 @@ class DetailWebToon extends Component {
       title: params ? params.otherTitle : 'No Title',
     };
   };
+
   constructor(props) {
     super(props);
     this.state = {
       position: 1,
       interval: null,
-      banners: [
-        {
-          title: 'Ep.4 - Last Game ',
-          url:
-            'https://awsimages.detik.net.id/community/media/visual/2018/02/06/9ccd0ab5-43c8-4ea0-876c-9b0763bd38d6_43.jpeg?w=780&q=90',
-          releaseDate: '9 Oktober 2019',
-        },
-        {
-          title: 'Ep.3 - Kaburnya dari Rumah',
-          url:
-            'https://forums.tapas.io/uploads/default/original/3X/4/d/4dcd6b2abf71721199d507d6b28c73dc1e2a55e4.png',
-          releaseDate: '3 Oktober 2019',
-        },
-        {
-          title: 'Ep.2 - Teringat Kerumah',
-          url:
-            'https://66.media.tumblr.com/d5cff69e37d4dc86ae33f3e9c6dd6970/tumblr_inline_pkorbg5I481szvfcc_540.jpg',
-          releaseDate: '23 September 2019',
-        },
-        {
-          title: 'Ep.1 - Kembalinya Nyata',
-          url:
-            'https://cf.shopee.co.id/file/2843f78cb557d57de7c7ab97e4344e9b_tn',
-          releaseDate: '17 September 2019',
-        },
-        {
-          title: 'Prolog',
-          url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
-          releaseDate: '1 September 2019',
-        },
-      ],
     };
   }
-  componentWillMount() {
-    this.setState({
-      interval: setInterval(() => {
-        this.setState({
-          position:
-            this.state.position === this.state.banners.length
-              ? 0
-              : this.state.position + 1,
-        });
-      }, 2000),
-    });
+
+  async componentDidMount() {
+    const { navigation } = this.props;
+    const webtoonId = navigation.getParam('webtoonId', 'No-ID');
+    await this.props.getWebtoonEpisodes(webtoonId);
   }
-  componentWillUnmount() {
-    clearInterval(this.state.interval);
-  }
+
   render() {
+    const { navigation } = this.props;
+    const bannerImage = navigation.getParam(
+      'bannerImage',
+      'http://view.dreamstalk.ca/breeze5/images/no-photo.png',
+    );
+    const webtoonId = navigation.getParam('webtoonId', 'No-ID');
     console.disableYellowBox = true;
+    Moment.locale('en');
     return (
-      <Container style={styles.container}>
+      <Container>
         <Content>
           <View>
             <View style={styles.viewColor}>
@@ -78,8 +55,7 @@ class DetailWebToon extends Component {
                     height: 200,
                   }}
                   source={{
-                    uri:
-                      'https://cdn.idntimes.com/content-images/post/20190119/save-me-bts-01dacdfa280c37894b18ae59b09bb6c2_600x400.jpg',
+                    uri: bannerImage,
                   }}
                 />
               </Item>
@@ -90,51 +66,48 @@ class DetailWebToon extends Component {
                 <View style={styles.viewContent}>
                   <FlatList
                     showsVerticalScrollIndicator={false}
-                    data={this.state.banners}
+                    data={this.props.episodesLocal.episodes}
                     renderItem={({ item }) => (
-                      <View
-                        style={styles.viewAddFav}
-                        onPress={() =>
-                          this.props.navigation.navigate('DetailEpisode', {
-                            itemTitle: item.title,
-                          })
-                        }>
-                        <Image
+                      <View style={styles.viewAddFav}>
+                        <TouchableOpacity
                           onPress={() =>
                             this.props.navigation.navigate('DetailEpisode', {
                               itemTitle: item.title,
+                              webtoonId: webtoonId,
+                              episodeId: item.id,
                             })
-                          }
-                          style={{
-                            width: 50,
-                            height: 50,
-                            borderWidth: 3,
-                            borderColor: 'grey',
-                          }}
-                          source={{ uri: item.url }}
-                        />
+                          }>
+                          <Image
+                            style={{
+                              width: 75,
+                              height: 75,
+                              borderWidth: 1,
+                              borderColor: 'grey',
+                              borderRadius: 7,
+                            }}
+                            source={{ uri: item.image }}
+                          />
+                        </TouchableOpacity>
                         <View style={styles.viewListItem}>
-                          <Text
+                          <TouchableOpacity
                             onPress={() =>
                               this.props.navigation.navigate('DetailEpisode', {
                                 itemTitle: item.title,
+                                webtoonId: webtoonId,
+                                episodeId: item.id,
                               })
                             }>
-                            {item.title}
-                          </Text>
-                          <Text
-                            style={{ fontSize: 13, fontColor: 'grey' }}
-                            onPress={() =>
-                              this.props.navigation.navigate('DetailEpisode', {
-                                itemTitle: item.title,
-                              })
-                            }>
-                            {item.releaseDate}
-                          </Text>
+                            <Text>{item.title}</Text>
+                            <Text style={{ fontSize: 13 }}>
+                              {Moment(item.createdAt).format(
+                                'dddd, D MMMM YYYY',
+                              )}
+                            </Text>
+                          </TouchableOpacity>
                         </View>
                       </View>
                     )}
-                    keyExtractor={item => item}
+                    keyExtractor={item => item.title}
                   />
                 </View>
               </SafeAreaView>
@@ -149,29 +122,19 @@ class DetailWebToon extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#f1f2f6',
-    alignItems: 'center',
   },
   viewContent: {
     marginStart: 10,
     width: '95%',
     alignItems: 'center',
-    borderRadius: 15,
+    marginBottom: 15,
   },
   viewColor: {
-    width: '100%',
     backgroundColor: '#ffffff',
-    alignItems: 'center',
   },
   inputText: {
-    width: '100%',
     marginTop: 10,
     marginBottom: 20,
-    borderRadius: 15,
-  },
-  itemSliderImage: {
-    width: '90%',
-    borderWidth: 3,
-    borderColor: 'grey',
   },
   itemMarginBottom: {
     marginBottom: 10,
@@ -191,7 +154,6 @@ const styles = StyleSheet.create({
     marginStart: 20,
     marginHorizontal: 10,
     marginVertical: 10,
-    borderRadius: 15,
   },
   viewAddFav: {
     backgroundColor: '#ffffff',
@@ -201,7 +163,6 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   viewListItem: {
-    width: '100%',
     marginStart: 10,
     justifyContent: 'center',
   },
@@ -211,4 +172,20 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailWebToon;
+const mapStateToProps = state => {
+  return {
+    episodesLocal: state.episodes,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getWebtoonEpisodes: id =>
+      dispatch(actionWebtoons.handleGetWebtoonEpisodes(id)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(DetailWebToon);

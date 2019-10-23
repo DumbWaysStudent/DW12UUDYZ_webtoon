@@ -1,48 +1,42 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
-import { StyleSheet, FlatList, Image } from 'react-native';
+import { StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import {
   Container,
   Text,
   View,
   Content,
-  Right,
   Button,
   Label,
   Item,
   Input,
 } from 'native-base';
+import { connect } from 'react-redux';
+import * as actionAccount from './../redux/actions/actionAccounts';
+import Moment from 'moment';
 
 class EditMyWebtoon extends Component {
   constructor(props) {
     super(props);
     this.state = {
       inputValue: '',
-      banners: [
-        {
-          title: 'Ep.2 - Teringat Kerumah',
-          url:
-            'https://66.media.tumblr.com/d5cff69e37d4dc86ae33f3e9c6dd6970/tumblr_inline_pkorbg5I481szvfcc_540.jpg',
-          sumFavorite: '23 September 2019',
-        },
-        {
-          title: 'Ep.1 - Kembalinya Nyata',
-          url:
-            'https://cf.shopee.co.id/file/2843f78cb557d57de7c7ab97e4344e9b_tn',
-          sumFavorite: '17 September 2019',
-        },
-        {
-          title: 'Prolog',
-          url:
-            'https://akcdn.detik.net.id/community/media/visual/2019/04/03/dac43146-7dd4-49f4-89ca-d81f57b070fc.jpeg?w=770&q=90',
-          sumFavorite: '1 September 2019',
-        },
-      ],
     };
+  }
+
+  async componentDidMount() {
+    const { navigation } = this.props;
+    const webtoonId = navigation.getParam('webtoonId', 'No-ID');
+    await this.props.getUserEpisodes(
+      this.props.loginLocal.login.id,
+      webtoonId,
+      this.props.loginLocal.login.token,
+    );
   }
 
   render() {
     console.disableYellowBox = true;
+    const { navigation } = this.props;
+    const webtoonTitle = navigation.getParam('itemTitle', 'No-ID');
     return (
       <Container>
         <Content>
@@ -51,54 +45,52 @@ class EditMyWebtoon extends Component {
               Title
             </Label>
             <Item style={styles.textInput}>
-              <Input value="Pasutri Gaje" />
+              <Input value={webtoonTitle} />
             </Item>
             <Label style={styles.textSubTitle}>Episode</Label>
             <View style={styles.viewColor}>
               <FlatList
                 showsVerticalScrollIndicator={false}
-                data={this.state.banners.filter(item =>
-                  item.title.includes(this.state.inputValue),
-                )}
+                data={this.props.userEpisodesLocal.userEpisodes}
                 renderItem={({ item }) => (
                   <View style={styles.viewAddFav}>
-                    <Image
+                    <TouchableOpacity
                       onPress={() =>
                         this.props.navigation.navigate('EditEpisode', {
                           itemTitle: item.title,
+                          episodeId: item.id,
+                          webtoonId: item.webtoonId,
                         })
-                      }
-                      style={{
-                        width: 80,
-                        height: 80,
-                        borderWidth: 1,
-                        borderColor: 'grey',
-                        borderRadius: 7,
-                      }}
-                      source={{ uri: item.url }}
-                    />
+                      }>
+                      <Image
+                        style={{
+                          width: 80,
+                          height: 80,
+                          borderWidth: 1,
+                          borderColor: 'grey',
+                          borderRadius: 7,
+                        }}
+                        source={{ uri: item.image }}
+                      />
+                    </TouchableOpacity>
                     <View style={styles.viewListItem}>
-                      <Text
+                      <TouchableOpacity
                         onPress={() =>
                           this.props.navigation.navigate('EditEpisode', {
                             itemTitle: item.title,
+                            episodeId: item.id,
+                            webtoonId: item.webtoonId,
                           })
                         }>
-                        {item.title}
-                      </Text>
-                      <Text
-                        style={{ fontSize: 11, fontColor: 'grey' }}
-                        onPress={() =>
-                          this.props.navigation.navigate('EditEpisode', {
-                            itemTitle: item.title,
-                          })
-                        }>
-                        {item.sumFavorite}
-                      </Text>
+                        <Text>{item.title}</Text>
+                        <Text style={{ fontSize: 13 }}>
+                          {Moment(item.createdAt).format('dddd, D MMMM YYYY')}
+                        </Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 )}
-                keyExtractor={item => item}
+                keyExtractor={item => item.id}
               />
               <View style={styles.viewRow}>
                 <Button
@@ -167,6 +159,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginHorizontal: 4,
     marginStart: 5,
+    marginBottom: 5,
     fontWeight: 'bold',
   },
   favItem: {
@@ -202,4 +195,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EditMyWebtoon;
+const mapStateToProps = state => {
+  return {
+    loginLocal: state.login,
+    userEpisodesLocal: state.userEpisodes,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getUserEpisodes: (userId, webtoonId, token) =>
+      dispatch(actionAccount.handleGetUserEpisodes(userId, webtoonId, token)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EditMyWebtoon);
