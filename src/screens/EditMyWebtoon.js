@@ -1,6 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
-import { StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import {
   Container,
   Text,
@@ -10,6 +16,10 @@ import {
   Label,
   Item,
   Input,
+  Right,
+  Left,
+  Header,
+  Icon,
 } from 'native-base';
 import { connect } from 'react-redux';
 import * as actionAccount from './../redux/actions/actionAccounts';
@@ -33,19 +43,86 @@ class EditMyWebtoon extends Component {
     );
   }
 
+  handleDeleteWebtoon = async () => {
+    const { navigation } = this.props;
+    const webtoonId = navigation.getParam('webtoonId', 'No-ID');
+    console.log(webtoonId);
+    await this.props.deleteUserWebtoon(
+      this.props.loginLocal.login.id,
+      webtoonId,
+      this.props.loginLocal.login.token,
+    );
+    if (this.props.deleteEpisodeLocal.deleteEpisode.message === 'success') {
+      Alert.alert('Success', 'Delete image successfully');
+      await this.props.getUserWebtoons(
+        this.props.loginLocal.login.id,
+        this.props.loginLocal.login.token,
+      );
+      this.props.navigation.navigate('MyWebtoon');
+    } else {
+      Alert.alert('Waring', 'Delete image failed');
+    }
+  };
+
+  handleUpdateWebtoon = async () => {
+    const { navigation } = this.props;
+    const webtoonId = navigation.getParam('webtoonId', 'No-ID');
+    const { inputValue } = this.state;
+    console.log(webtoonId);
+    if (inputValue === '') {
+      Alert.alert('Warning', 'Field Title is Null');
+    } else {
+      await this.props.updateUserWebtoon(
+        this.props.loginLocal.login.id,
+        webtoonId,
+        inputValue,
+        this.props.loginLocal.login.token,
+      );
+      this.props.navigation.navigate('MyWebtoon');
+    }
+  };
+
+  onEditTitle = text => {
+    this.setState({ inputValue: text });
+  };
+
   render() {
     console.disableYellowBox = true;
     const { navigation } = this.props;
     const webtoonTitle = navigation.getParam('itemTitle', 'No-ID');
+    const { goBack } = this.props.navigation;
     return (
       <Container>
+        <Header style={styles.headerStyle}>
+          <Left style={{ marginStart: 10 }}>
+            <Icon
+              onPress={() => goBack()}
+              name="arrow-back"
+              style={{ color: 'white' }}
+            />
+          </Left>
+          <Text style={{ color: 'white', fontSize: 20 }}>Edit Webtoon</Text>
+          <Right style={{ marginEnd: 10 }}>
+            <Icon
+              name="checkmark"
+              style={{ color: 'white' }}
+              onPress={() => {
+                this.handleUpdateWebtoon();
+              }}
+            />
+          </Right>
+        </Header>
         <Content>
           <View style={styles.viewContent}>
             <Label style={[styles.textSubTitle, { marginTop: 15 }]}>
               Title
             </Label>
             <Item style={styles.textInput}>
-              <Input value={webtoonTitle} />
+              <Input
+                value={this.state.inputValue}
+                onChangeText={text => this.onEditTitle(text)}
+                placeholder={webtoonTitle}
+              />
             </Item>
             <Label style={styles.textSubTitle}>Episode</Label>
             <View style={styles.viewColor}>
@@ -104,9 +181,9 @@ class EditMyWebtoon extends Component {
                 <Button
                   style={styles.btnComponent}
                   danger
-                  onPress={() =>
-                    this.props.navigation.navigate('CreateWebtoonEpisode')
-                  }>
+                  onPress={() => {
+                    this.handleDeleteWebtoon();
+                  }}>
                   <Text style={styles.txtBtn}>Delete Webtoon</Text>
                 </Button>
               </View>
@@ -193,12 +270,20 @@ const styles = StyleSheet.create({
   txtBtn: {
     textAlign: 'center',
   },
+  headerStyle: {
+    alignItems: 'center',
+    backgroundColor: '#3BAD87',
+    color: '#3BAD87',
+  },
 });
 
 const mapStateToProps = state => {
   return {
     loginLocal: state.login,
+    userWebtoonsLocal: state.userWebtoons,
     userEpisodesLocal: state.userEpisodes,
+    deleteWebtoonLocal: state.deleteWebtoon,
+    updateWebtoonLocal: state.updateWebtoon,
   };
 };
 
@@ -206,6 +291,12 @@ const mapDispatchToProps = dispatch => {
   return {
     getUserEpisodes: (userId, webtoonId, token) =>
       dispatch(actionAccount.handleGetUserEpisodes(userId, webtoonId, token)),
+    deleteUserWebtoon: (userId, webtoonId, token) =>
+      dispatch(actionAccount.handleDeleteUserWebtoon(userId, webtoonId, token)),
+    updateUserWebtoon: (userId, webtoonId, title, token) =>
+      dispatch(
+        actionAccount.handleUpdateUserWebtoon(userId, webtoonId, title, token),
+      ),
   };
 };
 

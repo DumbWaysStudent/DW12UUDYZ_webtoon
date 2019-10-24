@@ -178,7 +178,7 @@ class ForYou extends Component {
                         </View>
                       </View>
                     )}
-                    keyExtractor={item => item.title}
+                    keyExtractor={item => item.id}
                   />
                 </View>
               </SafeAreaView>
@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
   favItem: {
     marginVertical: 5,
     borderRadius: 15,
+    marginEnd: 10,
   },
   viewAddFav: {
     backgroundColor: '#ffffff',

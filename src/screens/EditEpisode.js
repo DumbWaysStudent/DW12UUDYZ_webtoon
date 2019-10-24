@@ -10,6 +10,10 @@ import {
   Label,
   Item,
   Input,
+  Right,
+  Left,
+  Header,
+  Icon,
 } from 'native-base';
 import { connect } from 'react-redux';
 import * as actionAccount from './../redux/actions/actionAccounts';
@@ -49,22 +53,94 @@ class EditEpisode extends Component {
       this.props.loginLocal.login.token,
     );
     if (this.props.deleteEpisodeLocal.deleteEpisode.message === 'success') {
-      Alert.alert('Waring', 'Delete image successfully');
+      Alert.alert('Success', 'Delete image successfully');
       this.props.navigation.navigate('MyWebtoon');
+    } else {
+      Alert.alert('Waring', 'Delete image failed');
     }
+  };
+
+  handleDeleteImage = async id => {
+    const { navigation } = this.props;
+    const webtoonId = navigation.getParam('webtoonId', 'No-ID');
+    const episodeId = navigation.getParam('episodeId', 'No-ID');
+    const imageId = id;
+    console.log(webtoonId);
+    console.log(episodeId);
+    await this.props.deleteUserImage(
+      this.props.loginLocal.login.id,
+      webtoonId,
+      episodeId,
+      imageId,
+      this.props.loginLocal.login.token,
+    );
+    this.props.navigation.navigate('EditMyWebtoon');
+    // if (this.props.deleteImageLocal.deleteImage.message === 'success') {
+    //   Alert.alert('Success', 'Delete image successfully');
+    // } else {
+    //   Alert.alert('Waring', 'Delete image failed');
+    // }
+  };
+
+  handleUpdateEpisode = async () => {
+    const { navigation } = this.props;
+    const webtoonId = navigation.getParam('webtoonId', 'No-ID');
+    const episodeId = navigation.getParam('episodeId', 'No-ID');
+    const { inputValue } = this.state;
+    console.log(webtoonId);
+    if (inputValue === '') {
+      Alert.alert('Warning', 'Field Title is Null');
+    } else {
+      await this.props.updateUserEpisode(
+        this.props.loginLocal.login.id,
+        webtoonId,
+        episodeId,
+        inputValue,
+        this.props.loginLocal.login.token,
+      );
+      this.props.navigation.navigate('EditMyWebtoon');
+    }
+  };
+
+  onEditTitle = text => {
+    this.setState({ inputValue: text });
   };
 
   render() {
     console.disableYellowBox = true;
     const { navigation } = this.props;
     const episodeTitle = navigation.getParam('itemTitle', 'No-ID');
+    const { goBack } = this.props.navigation;
     return (
       <Container>
         <Content>
+          <Header style={styles.headerStyle}>
+            <Left style={{ marginStart: 10 }}>
+              <Icon
+                onPress={() => goBack()}
+                name="arrow-back"
+                style={{ color: 'white' }}
+              />
+            </Left>
+            <Text style={{ color: 'white', fontSize: 20 }}>Edit Episode</Text>
+            <Right style={{ marginEnd: 10 }}>
+              <Icon
+                name="checkmark"
+                style={{ color: 'white' }}
+                onPress={() => {
+                  this.handleUpdateEpisode();
+                }}
+              />
+            </Right>
+          </Header>
           <View style={styles.viewContent}>
             <Label style={[styles.textSubTitle, { marginTop: 15 }]}>Name</Label>
             <Item style={styles.textInput}>
-              <Input value={episodeTitle} />
+              <Input
+                value={this.state.inputValue}
+                onChangeText={text => this.onEditTitle(text)}
+                placeholder={episodeTitle}
+              />
             </Item>
             <Label style={styles.textSubTitle}>Add Image</Label>
             <View style={styles.viewColor}>
@@ -84,13 +160,19 @@ class EditEpisode extends Component {
                       source={{ uri: item.image }}
                     />
                     <View style={styles.viewListItem}>
-                      <Text>{item.image}</Text>
+                      <Text style={{ marginBottom: 10 }}>{item.image}</Text>
+                      <Button
+                        danger
+                        style={styles.btnFavorite}
+                        onPress={() => this.handleDeleteImage(item.id)}>
+                        <Text style={{ fontSize: 10 }}>Delete</Text>
+                      </Button>
                     </View>
                   </View>
                 )}
                 keyExtractor={item => item.id}
               />
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row', marginBottom: 100 }}>
                 <Button style={styles.btnComponent} success>
                   <Text>+ Image</Text>
                 </Button>
@@ -125,7 +207,7 @@ const styles = StyleSheet.create({
   },
   viewContent: {
     marginStart: 5,
-    marginEnd: 5,
+    marginEnd: 10,
     borderRadius: 15,
   },
   viewColor: {
@@ -174,7 +256,8 @@ const styles = StyleSheet.create({
   },
   btnFavorite: {
     height: 20,
-    width: 120,
+    width: 65,
+    textAlign: 'center',
   },
   btnComponent: {
     borderRadius: 7,
@@ -194,13 +277,20 @@ const styles = StyleSheet.create({
   txtBtn: {
     textAlign: 'center',
   },
+  headerStyle: {
+    alignItems: 'center',
+    backgroundColor: '#3BAD87',
+    color: '#3BAD87',
+  },
 });
 
 const mapStateToProps = state => {
   return {
     deleteEpisodeLocal: state.deleteEpisode,
+    deleteImageLocal: state.deleteImage,
     loginLocal: state.login,
     userImagesLocal: state.userImages,
+    updateUpdateLocal: state.updateUpdate,
   };
 };
 
@@ -216,6 +306,26 @@ const mapDispatchToProps = dispatch => {
           userId,
           webtoonId,
           episodeId,
+          token,
+        ),
+      ),
+    updateUserEpisode: (userId, webtoonId, episodeId, title, token) =>
+      dispatch(
+        actionAccount.handleUpdateUserEpisode(
+          userId,
+          webtoonId,
+          episodeId,
+          title,
+          token,
+        ),
+      ),
+    deleteUserImage: (userId, webtoonId, episodeId, imageId, token) =>
+      dispatch(
+        actionAccount.handleDeleteUserImage(
+          userId,
+          webtoonId,
+          episodeId,
+          imageId,
           token,
         ),
       ),

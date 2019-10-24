@@ -48,9 +48,8 @@ class EditProfile extends Component
             }
         });
     };
-    
-    render()
-    {
+
+    render() {
         const { imageProfile, isEditProfile, nameProfile } = this.state;
         const { goBack } = this.props.navigation;
         return (
@@ -58,8 +57,7 @@ class EditProfile extends Component
                 <Header style={styles.headerStyle}>
                     <Left style={{ marginStart: 10 }}><Icon onPress={() => goBack()} name="arrow-back" style={{ color: 'white' }} /></Left><Text style={{ color: 'white', fontSize: 20, }}>Edit Profile</Text>
                     <Right style={{ marginEnd: 10 }}><Icon name="checkmark" style={{ color: 'white' }}
-                        onPress={() =>
-                        {
+                        onPress={() => {
                             this.props.navigation.navigate('Profile', {
                                 image: this.state.imageProfile,
                                 name:

@@ -173,69 +173,25 @@ const AuthStack = createStackNavigator({
   CreateWebtoon: {
     screen: CreateWebtoon,
     navigationOptions: {
-      headerTitle: 'Create Webtoon',
-      headerRight: (
-        // eslint-disable-next-line react-native/no-inline-styles
-        <Icon style={{ color: 'white' }} name="checkmark" />
-      ),
-      headerStyle: {
-        backgroundColor: '#3BAD87',
-      },
-      headerRightContainerStyle: {
-        marginEnd: 15,
-      },
-      headerTintColor: '#fff',
+      header: null,
     },
   },
   CreateWebtoonEpisode: {
     screen: CreateWebtoonEpisode,
     navigationOptions: {
-      headerTitle: 'Create Episode',
-      headerRight: (
-        // eslint-disable-next-line react-native/no-inline-styles
-        <Icon style={{ color: 'white' }} name="checkmark" />
-      ),
-      headerStyle: {
-        backgroundColor: '#3BAD87',
-      },
-      headerRightContainerStyle: {
-        marginEnd: 15,
-      },
-      headerTintColor: '#fff',
+      header: null,
     },
   },
   EditMyWebtoon: {
     screen: EditMyWebtoon,
     navigationOptions: {
-      headerTitle: 'Edit Webtoon',
-      headerRight: (
-        // eslint-disable-next-line react-native/no-inline-styles
-        <Icon style={{ color: 'white' }} name="checkmark" />
-      ),
-      headerStyle: {
-        backgroundColor: '#3BAD87',
-      },
-      headerRightContainerStyle: {
-        marginEnd: 15,
-      },
-      headerTintColor: '#fff',
+      header: null,
     },
   },
   EditEpisode: {
     screen: EditEpisode,
     navigationOptions: {
-      headerTitle: 'Edit Episode',
-      headerRight: (
-        // eslint-disable-next-line react-native/no-inline-styles
-        <Icon style={{ color: 'white' }} name="checkmark" />
-      ),
-      headerStyle: {
-        backgroundColor: '#3BAD87',
-      },
-      headerRightContainerStyle: {
-        marginEnd: 15,
-      },
-      headerTintColor: '#fff',
+      header: null,
     },
   },
 });

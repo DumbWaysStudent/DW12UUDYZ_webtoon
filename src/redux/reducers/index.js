@@ -9,9 +9,13 @@ import reducerEpisodes from './../reducers/reducerEpisodes';
 import reducerImages from './reducerImages';
 import reducerLogin from './../reducers/reducerLogin';
 import reducerUserWebtoons from './../reducers/reducerUserWebtoons';
+import reducerUpdateWebtoon from './../reducers/reducerUpdateWebtoon';
+import reducerDeleteWebtoon from './../reducers/reducerDeleteWebtoon';
 import reducerUserEpisodes from './../reducers/reducerUserEpisodes';
-import reducerUserImages from './../reducers/reducerUserImages';
+import reducerUpdateEpisode from './../reducers/reducerUpdateEpisode';
 import reducerDeleteEpisode from './../reducers/reducerDeleteEpisode';
+import reducerUserImages from './../reducers/reducerUserImages';
+import reducerDeleteImage from './../reducers/reducerDeleteImage';
 
 const reducerRouter = createNavigationReducer(RootNavigator);
 
@@ -23,9 +27,13 @@ const appReducer = combineReducers({
   images: reducerImages,
   login: reducerLogin,
   userWebtoons: reducerUserWebtoons,
+  deleteWebtoon: reducerDeleteWebtoon,
+  updateWebtoon: reducerUpdateWebtoon,
   userEpisodes: reducerUserEpisodes,
-  userImages: reducerUserImages,
+  updateEpisode: reducerUpdateEpisode,
   deleteEpisode: reducerDeleteEpisode,
+  userImages: reducerUserImages,
+  deleteImage: reducerDeleteImage,
 });
 
 export default appReducer;

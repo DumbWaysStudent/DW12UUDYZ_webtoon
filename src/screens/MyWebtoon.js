@@ -41,7 +41,7 @@ class MyWebtoon extends Component {
                       }>
                       <Image
                         style={{
-                          width: 80,
+                          width: 100,
                           height: 80,
                           borderWidth: 1,
                           borderColor: 'grey',
@@ -58,7 +58,10 @@ class MyWebtoon extends Component {
                             webtoonId: item.id,
                           })
                         }>
-                        <Text>{item.title}</Text>
+                        <Text style={{ fontSize: 20 }}>{item.title}</Text>
+                        <Text style={{ fontSize: 12 }}>
+                          Genre: {item.title}
+                        </Text>
                         <Text
                           style={{ fontSize: 13 }}
                           onPress={() =>

@@ -47,7 +47,7 @@ class DetailEpisode extends Component {
                     />
                   </View>
                 )}
-                keyExtractor={item => item.page}
+                keyExtractor={item => item.id}
               />
             </View>
           </View>

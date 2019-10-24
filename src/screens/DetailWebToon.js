@@ -107,7 +107,7 @@ class DetailWebToon extends Component {
                         </View>
                       </View>
                     )}
-                    keyExtractor={item => item.title}
+                    keyExtractor={item => item.id}
                   />
                 </View>
               </SafeAreaView>
